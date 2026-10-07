@@ -1,0 +1,22 @@
+[package]
+name = "lombokauth"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+description = "Authentication core: JWT HS256, PBKDF2 password hashes in PHC format, HOTP and TOTP, and role-based access control with wildcards. Part of the Lombok Ecosystem."
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/codinglombok/LombokAuth"
+homepage = "https://github.com/codinglombok/LombokAuth"
+readme = "../README.md"
+keywords = ["auth", "jwt", "totp", "pbkdf2", "rbac"]
+exclude = ["tests/*", ".gitignore"]
+categories = ["authentication", "cryptography", "no-std"]
+
+[features]
+default = ["std"]
+std = []
+
+[dependencies]
+
+[lib]
+path = "src/lib.rs"

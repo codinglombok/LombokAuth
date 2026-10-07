@@ -1,0 +1,18 @@
+{
+  "lombokauth.error.invalid_secret": "Secret tidak ada atau terlalu pendek.",
+  "lombokauth.error.invalid_token": "Bentuk token tidak sah.",
+  "lombokauth.error.invalid_signature": "Tanda tangan token tidak sah.",
+  "lombokauth.error.unsupported_alg": "Algoritma token tidak diterima.",
+  "lombokauth.error.token_expired": "Token sudah kedaluwarsa.",
+  "lombokauth.error.token_not_yet_valid": "Token belum berlaku.",
+  "lombokauth.error.invalid_issuer": "Penerbit token tidak diterima.",
+  "lombokauth.error.invalid_audience": "Audiens token tidak diterima.",
+  "lombokauth.error.invalid_claim": "Klaim token bertipe salah atau tidak ada.",
+  "lombokauth.error.invalid_salt": "Salt harus paling sedikit 16 byte.",
+  "lombokauth.error.invalid_hash": "Hash kata sandi tersimpan tidak sah atau tidak didukung.",
+  "lombokauth.error.invalid_option": "Opsi tidak sah.",
+  "lombokauth.error.invalid_input": "Tipe atau encoding argumen salah.",
+  "lombokauth.error.invalid_policy": "Kebijakan akses tidak sah.",
+  "lombokauth.error.invalid_role": "Peran tidak dikenal.",
+  "lombokauth.error.invalid_permission": "Nama izin tidak sah."
+}

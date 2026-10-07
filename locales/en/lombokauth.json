@@ -1,0 +1,18 @@
+{
+  "lombokauth.error.invalid_secret": "The secret is missing or too short.",
+  "lombokauth.error.invalid_token": "The token is malformed.",
+  "lombokauth.error.invalid_signature": "The token signature is not valid.",
+  "lombokauth.error.unsupported_alg": "The token algorithm is not accepted.",
+  "lombokauth.error.token_expired": "The token has expired.",
+  "lombokauth.error.token_not_yet_valid": "The token is not valid yet.",
+  "lombokauth.error.invalid_issuer": "The token issuer is not accepted.",
+  "lombokauth.error.invalid_audience": "The token audience is not accepted.",
+  "lombokauth.error.invalid_claim": "A token claim has an invalid type or is missing.",
+  "lombokauth.error.invalid_salt": "The salt must be at least 16 bytes.",
+  "lombokauth.error.invalid_hash": "The stored password hash is malformed or unsupported.",
+  "lombokauth.error.invalid_option": "An option is invalid.",
+  "lombokauth.error.invalid_input": "An argument has the wrong type or encoding.",
+  "lombokauth.error.invalid_policy": "The access policy is invalid.",
+  "lombokauth.error.invalid_role": "A role is unknown.",
+  "lombokauth.error.invalid_permission": "A permission name is invalid."
+}

@@ -1,0 +1,8621 @@
+{
+ "format": "lombokauth-vectors-v1",
+ "specVersion": "0.1.0",
+ "note": "Normative cross-language vectors. Each case calls `fn` with `args` ({\"hex\": ...} denotes bytes); `expect` is {result} or {error: code}.",
+ "groups": [
+  {
+   "name": "golden",
+   "cases": [
+    {
+     "name": "hotp rfc4226 counter 0",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      0
+     ],
+     "expect": {
+      "result": "755224"
+     }
+    },
+    {
+     "name": "hotp rfc4226 counter 1",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      1
+     ],
+     "expect": {
+      "result": "287082"
+     }
+    },
+    {
+     "name": "hotp rfc4226 counter 2",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      2
+     ],
+     "expect": {
+      "result": "359152"
+     }
+    },
+    {
+     "name": "hotp rfc4226 counter 3",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      3
+     ],
+     "expect": {
+      "result": "969429"
+     }
+    },
+    {
+     "name": "hotp rfc4226 counter 4",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      4
+     ],
+     "expect": {
+      "result": "338314"
+     }
+    },
+    {
+     "name": "hotp rfc4226 counter 5",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      5
+     ],
+     "expect": {
+      "result": "254676"
+     }
+    },
+    {
+     "name": "hotp rfc4226 counter 6",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      6
+     ],
+     "expect": {
+      "result": "287922"
+     }
+    },
+    {
+     "name": "hotp rfc4226 counter 7",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      7
+     ],
+     "expect": {
+      "result": "162583"
+     }
+    },
+    {
+     "name": "hotp rfc4226 counter 8",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      8
+     ],
+     "expect": {
+      "result": "399871"
+     }
+    },
+    {
+     "name": "hotp rfc4226 counter 9",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      9
+     ],
+     "expect": {
+      "result": "520489"
+     }
+    },
+    {
+     "name": "hotp secret as bytes",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "3132333435363738393031323334353637383930"
+      },
+      0
+     ],
+     "expect": {
+      "result": "755224"
+     }
+    },
+    {
+     "name": "hotp 8 digits",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      0,
+      {
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "84755224"
+     }
+    },
+    {
+     "name": "hotp large counter",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      4294967296
+     ],
+     "expect": {
+      "result": "999456"
+     }
+    },
+    {
+     "name": "hotp short secret",
+     "fn": "hotp",
+     "args": [
+      "123456789",
+      0
+     ],
+     "expect": {
+      "error": "invalid_secret"
+     }
+    },
+    {
+     "name": "hotp digits 5",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      0,
+      {
+       "digits": 5
+      }
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "hotp digits 9",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      0,
+      {
+       "digits": 9
+      }
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "hotp negative counter",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      -1
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "hotp fractional counter",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      1.5
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "hotp unknown algorithm",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      0,
+      {
+       "algorithm": "MD5"
+      }
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "hotp unknown option",
+     "fn": "hotp",
+     "args": [
+      "12345678901234567890",
+      0,
+      {
+       "digit": 6
+      }
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA1 t=59",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      59,
+      {
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "94287082"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA256 t=59",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890123456789012",
+      59,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "46119246"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA1 t=1111111109",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      1111111109,
+      {
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "07081804"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA256 t=1111111109",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890123456789012",
+      1111111109,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "68084774"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA1 t=1111111111",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      1111111111,
+      {
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "14050471"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA256 t=1111111111",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890123456789012",
+      1111111111,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "67062674"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA1 t=1234567890",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      1234567890,
+      {
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "89005924"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA256 t=1234567890",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890123456789012",
+      1234567890,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "91819424"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA1 t=2000000000",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      2000000000,
+      {
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "69279037"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA256 t=2000000000",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890123456789012",
+      2000000000,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "90698825"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA1 t=20000000000",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      20000000000,
+      {
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "65353130"
+     }
+    },
+    {
+     "name": "totp rfc6238 SHA256 t=20000000000",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890123456789012",
+      20000000000,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "77737706"
+     }
+    },
+    {
+     "name": "totp default 6 digits",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      59
+     ],
+     "expect": {
+      "result": "287082"
+     }
+    },
+    {
+     "name": "totp period 60",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      119,
+      {
+       "period": 60
+      }
+     ],
+     "expect": {
+      "result": "287082"
+     }
+    },
+    {
+     "name": "totp t0",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      1059,
+      {
+       "t0": 1000
+      }
+     ],
+     "expect": {
+      "result": "287082"
+     }
+    },
+    {
+     "name": "totp before t0",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      10,
+      {
+       "t0": 1000
+      }
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "totp negative time",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      -1
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "totp fractional time",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      1.5
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "totp period zero",
+     "fn": "totp",
+     "args": [
+      "12345678901234567890",
+      0,
+      {
+       "period": 0
+      }
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "verifyTotp current step",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "287082",
+      59
+     ],
+     "expect": {
+      "result": 0
+     }
+    },
+    {
+     "name": "verifyTotp previous step",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "287082",
+      60
+     ],
+     "expect": {
+      "result": -1
+     }
+    },
+    {
+     "name": "verifyTotp next step",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "359152",
+      59
+     ],
+     "expect": {
+      "result": 1
+     }
+    },
+    {
+     "name": "verifyTotp outside window",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "969429",
+      59
+     ],
+     "expect": {
+      "result": null
+     }
+    },
+    {
+     "name": "verifyTotp wider window",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "969429",
+      59,
+      {
+       "window": 2
+      }
+     ],
+     "expect": {
+      "result": 2
+     }
+    },
+    {
+     "name": "verifyTotp window 0",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "287082",
+      60,
+      {
+       "window": 0
+      }
+     ],
+     "expect": {
+      "result": null
+     }
+    },
+    {
+     "name": "verifyTotp step 0 no negative steps",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "755224",
+      0
+     ],
+     "expect": {
+      "result": 0
+     }
+    },
+    {
+     "name": "verifyTotp negative step not wrapped",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "094451",
+      0
+     ],
+     "expect": {
+      "result": null
+     }
+    },
+    {
+     "name": "verifyTotp wrong length",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "28708",
+      59
+     ],
+     "expect": {
+      "result": null
+     }
+    },
+    {
+     "name": "verifyTotp non-digits",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "28708a",
+      59
+     ],
+     "expect": {
+      "result": null
+     }
+    },
+    {
+     "name": "verifyTotp non-string code",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      287082,
+      59
+     ],
+     "expect": {
+      "result": null
+     }
+    },
+    {
+     "name": "verifyTotp window too large",
+     "fn": "verifyTotp",
+     "args": [
+      "12345678901234567890",
+      "287082",
+      59,
+      {
+       "window": 11
+      }
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "base32 encode \"\"",
+     "fn": "base32Encode",
+     "args": [
+      ""
+     ],
+     "expect": {
+      "result": ""
+     }
+    },
+    {
+     "name": "base32 decode \"\"",
+     "fn": "base32Decode",
+     "args": [
+      ""
+     ],
+     "expect": {
+      "result": {
+       "hex": ""
+      }
+     }
+    },
+    {
+     "name": "base32 encode \"f\"",
+     "fn": "base32Encode",
+     "args": [
+      "f"
+     ],
+     "expect": {
+      "result": "MY======"
+     }
+    },
+    {
+     "name": "base32 decode \"MY======\"",
+     "fn": "base32Decode",
+     "args": [
+      "MY======"
+     ],
+     "expect": {
+      "result": {
+       "hex": "66"
+      }
+     }
+    },
+    {
+     "name": "base32 encode \"fo\"",
+     "fn": "base32Encode",
+     "args": [
+      "fo"
+     ],
+     "expect": {
+      "result": "MZXQ===="
+     }
+    },
+    {
+     "name": "base32 decode \"MZXQ====\"",
+     "fn": "base32Decode",
+     "args": [
+      "MZXQ===="
+     ],
+     "expect": {
+      "result": {
+       "hex": "666f"
+      }
+     }
+    },
+    {
+     "name": "base32 encode \"foo\"",
+     "fn": "base32Encode",
+     "args": [
+      "foo"
+     ],
+     "expect": {
+      "result": "MZXW6==="
+     }
+    },
+    {
+     "name": "base32 decode \"MZXW6===\"",
+     "fn": "base32Decode",
+     "args": [
+      "MZXW6==="
+     ],
+     "expect": {
+      "result": {
+       "hex": "666f6f"
+      }
+     }
+    },
+    {
+     "name": "base32 encode \"foob\"",
+     "fn": "base32Encode",
+     "args": [
+      "foob"
+     ],
+     "expect": {
+      "result": "MZXW6YQ="
+     }
+    },
+    {
+     "name": "base32 decode \"MZXW6YQ=\"",
+     "fn": "base32Decode",
+     "args": [
+      "MZXW6YQ="
+     ],
+     "expect": {
+      "result": {
+       "hex": "666f6f62"
+      }
+     }
+    },
+    {
+     "name": "base32 encode \"fooba\"",
+     "fn": "base32Encode",
+     "args": [
+      "fooba"
+     ],
+     "expect": {
+      "result": "MZXW6YTB"
+     }
+    },
+    {
+     "name": "base32 decode \"MZXW6YTB\"",
+     "fn": "base32Decode",
+     "args": [
+      "MZXW6YTB"
+     ],
+     "expect": {
+      "result": {
+       "hex": "666f6f6261"
+      }
+     }
+    },
+    {
+     "name": "base32 encode \"foobar\"",
+     "fn": "base32Encode",
+     "args": [
+      "foobar"
+     ],
+     "expect": {
+      "result": "MZXW6YTBOI======"
+     }
+    },
+    {
+     "name": "base32 decode \"MZXW6YTBOI======\"",
+     "fn": "base32Decode",
+     "args": [
+      "MZXW6YTBOI======"
+     ],
+     "expect": {
+      "result": {
+       "hex": "666f6f626172"
+      }
+     }
+    },
+    {
+     "name": "base32 decode lowercase",
+     "fn": "base32Decode",
+     "args": [
+      "mzxw6ytboi"
+     ],
+     "expect": {
+      "result": {
+       "hex": "666f6f626172"
+      }
+     }
+    },
+    {
+     "name": "base32 decode without padding",
+     "fn": "base32Decode",
+     "args": [
+      "MZXW6YQ"
+     ],
+     "expect": {
+      "result": {
+       "hex": "666f6f62"
+      }
+     }
+    },
+    {
+     "name": "base32 decode bad length",
+     "fn": "base32Decode",
+     "args": [
+      "MZXW6Y"
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "base32 decode length 1",
+     "fn": "base32Decode",
+     "args": [
+      "A"
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "base32 decode length 3",
+     "fn": "base32Decode",
+     "args": [
+      "AAA"
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "base32 decode length 6 with zero bits",
+     "fn": "base32Decode",
+     "args": [
+      "MZXW6A"
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "base32 decode bad char",
+     "fn": "base32Decode",
+     "args": [
+      "MZ1W"
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "base32 decode partial padding",
+     "fn": "base32Decode",
+     "args": [
+      "MY=="
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "base32 decode non-zero trailing bits",
+     "fn": "base32Decode",
+     "args": [
+      "MZ======"
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "base32 decode non-ASCII not folded",
+     "fn": "base32Decode",
+     "args": [
+      "M\u00df"
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "otpauth basic",
+     "fn": "otpauthUri",
+     "args": [
+      "12345678901234567890",
+      "ana@example.com",
+      "Example"
+     ],
+     "expect": {
+      "result": "otpauth://totp/Example:ana%40example.com?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&issuer=Example&algorithm=SHA1&digits=6&period=30"
+     }
+    },
+    {
+     "name": "otpauth encoding",
+     "fn": "otpauthUri",
+     "args": [
+      "12345678901234567890",
+      "ana wijaya",
+      "Lombok App (Dev)",
+      {
+       "digits": 8,
+       "period": 60,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "otpauth://totp/Lombok%20App%20%28Dev%29:ana%20wijaya?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&issuer=Lombok%20App%20%28Dev%29&algorithm=SHA256&digits=8&period=60"
+     }
+    },
+    {
+     "name": "otpauth utf-8",
+     "fn": "otpauthUri",
+     "args": [
+      "12345678901234567890",
+      "caf\u00e9",
+      "X"
+     ],
+     "expect": {
+      "result": "otpauth://totp/X:caf%C3%A9?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&issuer=X&algorithm=SHA1&digits=6&period=30"
+     }
+    },
+    {
+     "name": "otpauth colon in account",
+     "fn": "otpauthUri",
+     "args": [
+      "12345678901234567890",
+      "a:b",
+      "X"
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "otpauth empty issuer",
+     "fn": "otpauthUri",
+     "args": [
+      "12345678901234567890",
+      "a",
+      ""
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "jwt sign matches independent HMAC",
+     "fn": "signJwt",
+     "args": [
+      {
+       "sub": "user-1",
+       "iat": 1699999000,
+       "exp": 1700000600
+      },
+      "a-string-secret-at-least-256-bits-long"
+     ],
+     "expect": {
+      "result": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4"
+     }
+    },
+    {
+     "name": "jwt sign with kid",
+     "fn": "signJwt",
+     "args": [
+      {
+       "a": 1
+      },
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "kid": "k1"
+      }
+     ],
+     "expect": {
+      "result": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImsxIn0.eyJhIjoxfQ.3KPC0dgVyBzrxkgaWdKit-H7q_54pK9crlsHvA9VZDM"
+     }
+    },
+    {
+     "name": "jwt sign key order is ECMAScript order",
+     "fn": "signJwt",
+     "args": [
+      {
+       "2": "x",
+       "b": 1,
+       "a": [
+        1.5,
+        null
+       ]
+      },
+      "a-string-secret-at-least-256-bits-long"
+     ],
+     "expect": {
+      "result": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIyIjoieCIsImIiOjEsImEiOlsxLjUsbnVsbF19.eaouP0SOdMJCL7i2Yx5Dw1KGZ3heC-wnBuvEEIKbc44"
+     }
+    },
+    {
+     "name": "jwt sign unicode claim",
+     "fn": "signJwt",
+     "args": [
+      {
+       "n": "caf\u00e9"
+      },
+      "a-string-secret-at-least-256-bits-long"
+     ],
+     "expect": {
+      "result": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuIjoiY2Fmw6kifQ.wAMJbiXMyjZwL7srn9egwipRS2wwYBtR6pq0rgtbuEs"
+     }
+    },
+    {
+     "name": "jwt sign short secret",
+     "fn": "signJwt",
+     "args": [
+      {
+       "a": 1
+      },
+      "short"
+     ],
+     "expect": {
+      "error": "invalid_secret"
+     }
+    },
+    {
+     "name": "jwt sign 31-byte secret",
+     "fn": "signJwt",
+     "args": [
+      {
+       "a": 1
+      },
+      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+     ],
+     "expect": {
+      "error": "invalid_secret"
+     }
+    },
+    {
+     "name": "jwt sign 32-byte secret",
+     "fn": "signJwt",
+     "args": [
+      {
+       "a": 1
+      },
+      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+     ],
+     "expect": {
+      "result": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhIjoxfQ.NJDhta3BPz-VOg8jO07sxjn-px9G0YfSF38YQJTS5yA"
+     }
+    },
+    {
+     "name": "jwt sign claims not object",
+     "fn": "signJwt",
+     "args": [
+      [
+       1
+      ],
+      "a-string-secret-at-least-256-bits-long"
+     ],
+     "expect": {
+      "error": "invalid_claim"
+     }
+    },
+    {
+     "name": "jwt sign empty kid",
+     "fn": "signJwt",
+     "args": [
+      {
+       "a": 1
+      },
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "kid": ""
+      }
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "jwt verify ok",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "sub": "user-1",
+        "iat": 1699999000,
+        "exp": 1700000600
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt verify secret bytes",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4",
+      {
+       "hex": "612d737472696e672d7365637265742d61742d6c656173742d3235362d626974732d6c6f6e67"
+      },
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "sub": "user-1",
+        "iat": 1699999000,
+        "exp": 1700000600
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt wrong secret",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4",
+      "a-string-secret-at-least-256-bits-longx",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "jwt tampered payload",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "jwt alg none",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJleHAiOjE3MDAwMDA2MDB9.",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "unsupported_alg"
+     }
+    },
+    {
+     "name": "jwt alg none with signature",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJub25lIn0.eyJleHAiOjE3MDAwMDA2MDB9.lZv-7wf4RLg33RjfU5sohgBeXONse7UuRSRz5yyKINA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "unsupported_alg"
+     }
+    },
+    {
+     "name": "jwt alg HS512 rejected",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MDAwMDA2MDB9.xTXorpjdSgvpnlQBDYLWaAcDiceqfV2DpGNU1PhLUo0",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "unsupported_alg"
+     }
+    },
+    {
+     "name": "jwt alg lowercase rejected",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJoczI1NiJ9.eyJleHAiOjE3MDAwMDA2MDB9.sa9e4uF4tJrCuefXjLwsZSf_RNAngf6T7CaXbyCfyeo",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "unsupported_alg"
+     }
+    },
+    {
+     "name": "jwt alg missing",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJ0eXAiOiJKV1QifQ.eyJleHAiOjE3MDAwMDA2MDB9.4w1fs4BG0pZooENyrorllezQ-EfwSNF0Zqm3OQ1mBWU",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "unsupported_alg"
+     }
+    },
+    {
+     "name": "jwt crit rejected",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsImNyaXQiOlsiZXhwIl19.eyJleHAiOjE3MDAwMDA2MDB9.LItqvUrSjudHHgTN6sWfEnX2xY8ESEOS26sIIfcxfHs",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt typ other rejected",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6ImF0K2p3dCJ9.eyJleHAiOjE3MDAwMDA2MDB9.fsdbc24AC4ARqLkvRusUIP0CphG8BotqV7xPniaVWhk",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt typ absent accepted",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDAwMDA2MDB9.7E0GloFTm0QRwMebaaKDP1j2V4VTOAeYSfA9gTSrtc4",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256"
+       },
+       "claims": {
+        "exp": 1700000600
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt expired at exact exp",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAwMDAwMDB9.aADo4YWWnvKMdq5jgHhLtu2zAQ-OaPxntt6WbmzQmak",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "jwt one second before exp",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAwMDAwMDF9.8E46qKBK4OVQIGVImDOumDrpx7e53il12bFBsEHmKO8",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "exp": 1700000001
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt leeway",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTk5OTk5OTB9.kwvJFPNQi18sUuUDRKjP2l6tiDjFj50cblrMEF_jVBM",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "leeway": 30
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "exp": 1699999990
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt fractional exp",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDAwMDAwMDAuNX0.nGoCJOZWLx8MCFSQd83S_6M9r0RfPuSDXKn8XJVWtaw",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "exp": 1700000000.5
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt nbf future",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsIm5iZiI6MTcwMDAwMDAwMX0.uP46WNo2pwCKedUFbfiNDzl3dESXRkF1qlLBz28vFtc",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "token_not_yet_valid"
+     }
+    },
+    {
+     "name": "jwt nbf now",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsIm5iZiI6MTcwMDAwMDAwMH0.MvdFgrhY9ewflkMtnIbuVSzaPrs2HMe_DHR4BVk0CXA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "exp": 1800000000,
+        "nbf": 1700000000
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt nbf leeway",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsIm5iZiI6MTcwMDAwMDAxMH0.sTROB-S_bQ1lkPgvUjZybq_6d-faetZLKfGv5KbcJrA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "leeway": 10
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "exp": 1800000000,
+        "nbf": 1700000010
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt exp required by default",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ4In0.OWHGEeKFaKfc5AwioNaMlu2eYPx9rwFnzgvno6_EM3k",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_claim"
+     }
+    },
+    {
+     "name": "jwt exp optional",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ4In0.OWHGEeKFaKfc5AwioNaMlu2eYPx9rwFnzgvno6_EM3k",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "requireExp": false
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "sub": "x"
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt exp string",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOiIxODAwMDAwMDAwIn0.pUmKMewNLgFC2Jwg1ZD2PJbqywtrxFapoqJv24LLm_s",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_claim"
+     }
+    },
+    {
+     "name": "jwt iat string",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsImlhdCI6IngifQ.apiZ2UNRFSd_0CIkHWy2VtartxInUQ10q7EmooSy44o",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_claim"
+     }
+    },
+    {
+     "name": "jwt iss number",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsImlzcyI6MX0.efw4VKS-addDkowmuoKW6t6tZBiILtsAPoCy5cw0x18",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_claim"
+     }
+    },
+    {
+     "name": "jwt sub number",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsInN1YiI6MX0.XUdEH6wjXshz082NKunx75RVEcTA_CYMEcSOVv5yJoA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_claim"
+     }
+    },
+    {
+     "name": "jwt aud mixed array",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsImF1ZCI6WyJhIiwxXX0.acoPISIbp74rpRVukyrX90CcxryjRvQkFOdzQ0I6Vzs",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_claim"
+     }
+    },
+    {
+     "name": "jwt issuer ok",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsImlzcyI6Imh0dHBzOi8vaWQuZXhhbXBsZS5jb20ifQ.yV68CMdhxs5yumRu0Lls3Okgth7XylJiimDCM-vMAiI",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "exp": 1800000000,
+        "iss": "https://id.example.com"
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt issuer mismatch",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsImlzcyI6Imh0dHBzOi8vZXZpbC5leGFtcGxlLm5ldCJ9.Z96rDYDyF0JzGtN6YODgxC8wdHFmI1cMALIbdd_Gx-c",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "invalid_issuer"
+     }
+    },
+    {
+     "name": "jwt issuer missing",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDB9.CDbmiZIp1gRilcAJLbOGuTPvVUitPQXP1qIzyyK0oe0",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "invalid_issuer"
+     }
+    },
+    {
+     "name": "jwt audience string",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsImF1ZCI6ImFwaSJ9.yEJLx8QULgXzA-QfRIWqPBj_mn3UPiIXRCWwv4zC5FQ",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "exp": 1800000000,
+        "aud": "api"
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt audience array",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsImF1ZCI6WyJ3ZWIiLCJhcGkiXX0.zKCvg-1yDo0TTcDFa9cjXESFFbZBQ5KaClD_f7yjIzg",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "exp": 1800000000,
+        "aud": [
+         "web",
+         "api"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt audience mismatch",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsImF1ZCI6WyJ3ZWIiXX0.7vIDZHhEABzg9A4qL0lo7j00JGXaCQwLk66YbNu_Aig",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "error": "invalid_audience"
+     }
+    },
+    {
+     "name": "jwt audience missing",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDB9.CDbmiZIp1gRilcAJLbOGuTPvVUitPQXP1qIzyyK0oe0",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "error": "invalid_audience"
+     }
+    },
+    {
+     "name": "jwt expired checked before issuer",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEsImlzcyI6IngifQ.lHFBACEVn1iRLLyJcWN8ZZ4GZMVcPhgmCzHvI484qxE",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "y"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "jwt signature checked before claims",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjF9.FFTch3N_VoM_ZH74Ot1xG-UzCEyDTBENi4x2GMMifXA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "jwt two segments",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt four segments",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4.x",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt padded base64",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9=.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt standard base64 chars",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4+",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt payload not JSON",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.bm90IGpzb24.aYfI6ndKUhChJNDxI5tsEGrsxcdXX1uVSv0_EGS4isU",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt payload array",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.WzFd.X4Ia9pWhrlB8le-6DK9DISGyBl-q1Zoojpmu5Ork0i0",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt payload invalid utf-8",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e_99.AA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt payload lone surrogate",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MDAwMDAwMDAsIngiOiJcdWQ4MDAifQ.vwtsy8ZgY4lz2Zi4VV8YvOwRtgk4MAE6SAclxKUrr9s",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt payload non-finite number",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjFlNDAwfQ.-sWUaQzgkYENxObyqAjHINtdXZg-QmxN_2wmPmxgn7U",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt duplicate claim last wins",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEsImV4cCI6MTgwMDAwMDAwMH0.__OO0UNusNurNW_C7X3ES06uIyM9H8OJvxuY-jMEo2w",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "exp": 1800000000
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt empty signature",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "jwt token not string",
+     "fn": "verifyJwt",
+     "args": [
+      null,
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "jwt verify short secret",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4",
+      "short",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_secret"
+     }
+    },
+    {
+     "name": "jwt verify missing now",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4",
+      "a-string-secret-at-least-256-bits-long",
+      {}
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "jwt verify options null",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4",
+      "a-string-secret-at-least-256-bits-long",
+      null
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "jwt verify negative leeway",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "leeway": -1
+      }
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "jwt verify unknown option",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpYXQiOjE2OTk5OTkwMDAsImV4cCI6MTcwMDAwMDYwMH0.RLTRWjLY783h8r8mlyieCC09TGyNjBKqHqb0VVFkNJ4",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "aud": "x"
+      }
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "jwt decode unverified",
+     "fn": "decodeJwtUnverified",
+     "args": [
+      "eyJhbGciOiJub25lIn0.eyJzdWIiOiJ4In0.mdmaz7oPkFEPt0N4rQiXXaL2bBQgRf5d7_mbyrHPMN8"
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "none"
+       },
+       "claims": {
+        "sub": "x"
+       }
+      }
+     }
+    },
+    {
+     "name": "jwt decode unverified malformed",
+     "fn": "decodeJwtUnverified",
+     "args": [
+      "a.b"
+     ],
+     "expect": {
+      "error": "invalid_token"
+     }
+    },
+    {
+     "name": "hash matches independent PBKDF2",
+     "fn": "hashPassword",
+     "args": [
+      "correct horse",
+      "000102030405060708090a0b0c0d0e0f",
+      1000
+     ],
+     "expect": {
+      "result": "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ"
+     }
+    },
+    {
+     "name": "hash salt as bytes",
+     "fn": "hashPassword",
+     "args": [
+      "correct horse",
+      {
+       "hex": "000102030405060708090a0b0c0d0e0f"
+      },
+      1000
+     ],
+     "expect": {
+      "result": "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ"
+     }
+    },
+    {
+     "name": "hash unicode password",
+     "fn": "hashPassword",
+     "args": [
+      "kata sandi caf\u00e9",
+      "000102030405060708090a0b0c0d0e0f",
+      1000
+     ],
+     "expect": {
+      "result": "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$D9m1t9Qar8iPkCzfbUnDRb6z+hsfnEFLjyXU91BvHE0"
+     }
+    },
+    {
+     "name": "hash empty password",
+     "fn": "hashPassword",
+     "args": [
+      "",
+      "000102030405060708090a0b0c0d0e0f",
+      1000
+     ],
+     "expect": {
+      "result": "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$xbMBsf1hvO1j8AZCojBOxnRRn7182DxLyD2v4XQ/mFU"
+     }
+    },
+    {
+     "name": "hash 24-byte salt",
+     "fn": "hashPassword",
+     "args": [
+      "x",
+      "000102030405060708090a0b0c0d0e0f1011121314151617",
+      1001
+     ],
+     "expect": {
+      "result": "$pbkdf2-sha256$i=1001$AAECAwQFBgcICQoLDA0ODxAREhMUFRYX$B2D5zP/NIJFMaPwJljukBnfvQA2CG9nnn9AXAqvVWdI"
+     }
+    },
+    {
+     "name": "hash short salt",
+     "fn": "hashPassword",
+     "args": [
+      "x",
+      "0001",
+      1000
+     ],
+     "expect": {
+      "error": "invalid_salt"
+     }
+    },
+    {
+     "name": "hash 15-byte salt",
+     "fn": "hashPassword",
+     "args": [
+      "x",
+      "000000000000000000000000000000",
+      1000
+     ],
+     "expect": {
+      "error": "invalid_salt"
+     }
+    },
+    {
+     "name": "hash bad hex salt",
+     "fn": "hashPassword",
+     "args": [
+      "x",
+      "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+      1000
+     ],
+     "expect": {
+      "error": "invalid_salt"
+     }
+    },
+    {
+     "name": "hash too few iterations",
+     "fn": "hashPassword",
+     "args": [
+      "x",
+      "000102030405060708090a0b0c0d0e0f",
+      999
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "hash too many iterations",
+     "fn": "hashPassword",
+     "args": [
+      "x",
+      "000102030405060708090a0b0c0d0e0f",
+      10000001
+     ],
+     "expect": {
+      "error": "invalid_option"
+     }
+    },
+    {
+     "name": "hash password not string",
+     "fn": "hashPassword",
+     "args": [
+      1,
+      "000102030405060708090a0b0c0d0e0f",
+      1000
+     ],
+     "expect": {
+      "error": "invalid_input"
+     }
+    },
+    {
+     "name": "verify ok",
+     "fn": "verifyPassword",
+     "args": [
+      "correct horse",
+      "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "verify wrong",
+     "fn": "verifyPassword",
+     "args": [
+      "correct horsE",
+      "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "verify empty vs non-empty",
+     "fn": "verifyPassword",
+     "args": [
+      "",
+      "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "verify other format rejected",
+     "fn": "verifyPassword",
+     "args": [
+      "x",
+      "$argon2id$v=19$m=65536,t=3,p=4$abc$def"
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "verify malformed",
+     "fn": "verifyPassword",
+     "args": [
+      "x",
+      "$pbkdf2-sha256$i=1000$abc"
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "verify iterations below minimum",
+     "fn": "verifyPassword",
+     "args": [
+      "x",
+      "$pbkdf2-sha256$i=999$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ"
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "verify iterations leading zero",
+     "fn": "verifyPassword",
+     "args": [
+      "x",
+      "$pbkdf2-sha256$i=01000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ"
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "verify iterations too large",
+     "fn": "verifyPassword",
+     "args": [
+      "x",
+      "$pbkdf2-sha256$i=99999999$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ"
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "verify padded base64 rejected",
+     "fn": "verifyPassword",
+     "args": [
+      "x",
+      "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ="
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "verify short hash rejected",
+     "fn": "verifyPassword",
+     "args": [
+      "x",
+      "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKK"
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "verify 15-byte salt rejected",
+     "fn": "verifyPassword",
+     "args": [
+      "x",
+      "$pbkdf2-sha256$i=1000$AAAAAAAAAAAAAAAAAAAA$HuBAZ7NNufSXxZVHBAyMok37hdKtqBfmm/MCf0MtMbo"
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "verify non-canonical base64 rejected",
+     "fn": "verifyPassword",
+     "args": [
+      "x",
+      "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGR"
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "verify not string",
+     "fn": "verifyPassword",
+     "args": [
+      "x",
+      null
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "needsRehash lower",
+     "fn": "needsRehash",
+     "args": [
+      "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ",
+      2000
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "needsRehash equal",
+     "fn": "needsRehash",
+     "args": [
+      "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ",
+      1000
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "needsRehash default",
+     "fn": "needsRehash",
+     "args": [
+      "$pbkdf2-sha256$i=1000$AAECAwQFBgcICQoLDA0ODw$yRTMTwbMbo9G0VfjobWqerzuuxe7BETNTErBbKKumGQ"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "needsRehash malformed",
+     "fn": "needsRehash",
+     "args": [
+      "x",
+      1000
+     ],
+     "expect": {
+      "error": "invalid_hash"
+     }
+    },
+    {
+     "name": "can viewer reads posts",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer"
+      ],
+      "posts.read"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "can viewer cannot edit",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer"
+      ],
+      "posts.edit"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "can editor edits",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor"
+      ],
+      "posts.edit"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "can editor trailing star matches deeper",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor"
+      ],
+      "posts.edit.title"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "can trailing star needs one segment",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor"
+      ],
+      "posts"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "can editor inherits viewer",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor"
+      ],
+      "comments.read"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "can middle star matches one segment",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor"
+      ],
+      "comments.edit.own"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "can middle star not two segments",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor"
+      ],
+      "comments.edit.x.own"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "can deny wins over allow",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor"
+      ],
+      "posts.delete"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "can deny is inherited even by admin",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "admin"
+      ],
+      "posts.delete"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "can admin star",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "admin"
+      ],
+      "billing.refund"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "can leading star",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "auditor"
+      ],
+      "users.read"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "can leading star one segment",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "auditor"
+      ],
+      "users.profile.read"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "can deny in other role wins",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "admin",
+       "auditor"
+      ],
+      "billing.read"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "can no roles",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "posts.read"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "can case-sensitive",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer"
+      ],
+      "Posts.read"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "can unknown role",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "owner"
+      ],
+      "posts.read"
+     ],
+     "expect": {
+      "error": "invalid_role"
+     }
+    },
+    {
+     "name": "can roles not array",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      "viewer",
+      "posts.read"
+     ],
+     "expect": {
+      "error": "invalid_role"
+     }
+    },
+    {
+     "name": "can wildcard in checked permission",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer"
+      ],
+      "posts.*"
+     ],
+     "expect": {
+      "error": "invalid_permission"
+     }
+    },
+    {
+     "name": "can empty segment",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer"
+      ],
+      "posts..read"
+     ],
+     "expect": {
+      "error": "invalid_permission"
+     }
+    },
+    {
+     "name": "can permission not string",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer"
+      ],
+      1
+     ],
+     "expect": {
+      "error": "invalid_permission"
+     }
+    },
+    {
+     "name": "policy cycle",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a": {
+         "inherits": [
+          "b"
+         ]
+        },
+        "b": {
+         "inherits": [
+          "a"
+         ]
+        }
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_policy"
+     }
+    },
+    {
+     "name": "policy self cycle",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a": {
+         "inherits": [
+          "a"
+         ]
+        }
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_policy"
+     }
+    },
+    {
+     "name": "policy unknown inherited",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a": {
+         "inherits": [
+          "x"
+         ]
+        }
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_policy"
+     }
+    },
+    {
+     "name": "policy unknown role key",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a": {
+         "perms": []
+        }
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_policy"
+     }
+    },
+    {
+     "name": "policy unknown top key",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {},
+       "version": 1
+      }
+     ],
+     "expect": {
+      "error": "invalid_policy"
+     }
+    },
+    {
+     "name": "policy bad role name",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a b": {}
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_policy"
+     }
+    },
+    {
+     "name": "policy bad permission",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a": {
+         "permissions": [
+          "a b"
+         ]
+        }
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_permission"
+     }
+    },
+    {
+     "name": "policy bare deny",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a": {
+         "permissions": [
+          "!"
+         ]
+        }
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_permission"
+     }
+    },
+    {
+     "name": "policy partial wildcard segment",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a": {
+         "permissions": [
+          "posts.ed*"
+         ]
+        }
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_permission"
+     }
+    },
+    {
+     "name": "policy permissions not array",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a": {
+         "permissions": "x"
+        }
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_policy"
+     }
+    },
+    {
+     "name": "policy not object",
+     "fn": "validatePolicy",
+     "args": [
+      []
+     ],
+     "expect": {
+      "error": "invalid_policy"
+     }
+    },
+    {
+     "name": "policy null lists are empty",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a": {
+         "permissions": null,
+         "inherits": null
+        }
+       }
+      }
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "policy diamond ok",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "a": {},
+        "b": {
+         "inherits": [
+          "a"
+         ]
+        },
+        "c": {
+         "inherits": [
+          "a"
+         ]
+        },
+        "d": {
+         "inherits": [
+          "b",
+          "c"
+         ]
+        }
+       }
+      }
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "policy inheritance chain of 65 rejected",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "r0": {},
+        "r1": {
+         "inherits": [
+          "r0"
+         ]
+        },
+        "r2": {
+         "inherits": [
+          "r1"
+         ]
+        },
+        "r3": {
+         "inherits": [
+          "r2"
+         ]
+        },
+        "r4": {
+         "inherits": [
+          "r3"
+         ]
+        },
+        "r5": {
+         "inherits": [
+          "r4"
+         ]
+        },
+        "r6": {
+         "inherits": [
+          "r5"
+         ]
+        },
+        "r7": {
+         "inherits": [
+          "r6"
+         ]
+        },
+        "r8": {
+         "inherits": [
+          "r7"
+         ]
+        },
+        "r9": {
+         "inherits": [
+          "r8"
+         ]
+        },
+        "r10": {
+         "inherits": [
+          "r9"
+         ]
+        },
+        "r11": {
+         "inherits": [
+          "r10"
+         ]
+        },
+        "r12": {
+         "inherits": [
+          "r11"
+         ]
+        },
+        "r13": {
+         "inherits": [
+          "r12"
+         ]
+        },
+        "r14": {
+         "inherits": [
+          "r13"
+         ]
+        },
+        "r15": {
+         "inherits": [
+          "r14"
+         ]
+        },
+        "r16": {
+         "inherits": [
+          "r15"
+         ]
+        },
+        "r17": {
+         "inherits": [
+          "r16"
+         ]
+        },
+        "r18": {
+         "inherits": [
+          "r17"
+         ]
+        },
+        "r19": {
+         "inherits": [
+          "r18"
+         ]
+        },
+        "r20": {
+         "inherits": [
+          "r19"
+         ]
+        },
+        "r21": {
+         "inherits": [
+          "r20"
+         ]
+        },
+        "r22": {
+         "inherits": [
+          "r21"
+         ]
+        },
+        "r23": {
+         "inherits": [
+          "r22"
+         ]
+        },
+        "r24": {
+         "inherits": [
+          "r23"
+         ]
+        },
+        "r25": {
+         "inherits": [
+          "r24"
+         ]
+        },
+        "r26": {
+         "inherits": [
+          "r25"
+         ]
+        },
+        "r27": {
+         "inherits": [
+          "r26"
+         ]
+        },
+        "r28": {
+         "inherits": [
+          "r27"
+         ]
+        },
+        "r29": {
+         "inherits": [
+          "r28"
+         ]
+        },
+        "r30": {
+         "inherits": [
+          "r29"
+         ]
+        },
+        "r31": {
+         "inherits": [
+          "r30"
+         ]
+        },
+        "r32": {
+         "inherits": [
+          "r31"
+         ]
+        },
+        "r33": {
+         "inherits": [
+          "r32"
+         ]
+        },
+        "r34": {
+         "inherits": [
+          "r33"
+         ]
+        },
+        "r35": {
+         "inherits": [
+          "r34"
+         ]
+        },
+        "r36": {
+         "inherits": [
+          "r35"
+         ]
+        },
+        "r37": {
+         "inherits": [
+          "r36"
+         ]
+        },
+        "r38": {
+         "inherits": [
+          "r37"
+         ]
+        },
+        "r39": {
+         "inherits": [
+          "r38"
+         ]
+        },
+        "r40": {
+         "inherits": [
+          "r39"
+         ]
+        },
+        "r41": {
+         "inherits": [
+          "r40"
+         ]
+        },
+        "r42": {
+         "inherits": [
+          "r41"
+         ]
+        },
+        "r43": {
+         "inherits": [
+          "r42"
+         ]
+        },
+        "r44": {
+         "inherits": [
+          "r43"
+         ]
+        },
+        "r45": {
+         "inherits": [
+          "r44"
+         ]
+        },
+        "r46": {
+         "inherits": [
+          "r45"
+         ]
+        },
+        "r47": {
+         "inherits": [
+          "r46"
+         ]
+        },
+        "r48": {
+         "inherits": [
+          "r47"
+         ]
+        },
+        "r49": {
+         "inherits": [
+          "r48"
+         ]
+        },
+        "r50": {
+         "inherits": [
+          "r49"
+         ]
+        },
+        "r51": {
+         "inherits": [
+          "r50"
+         ]
+        },
+        "r52": {
+         "inherits": [
+          "r51"
+         ]
+        },
+        "r53": {
+         "inherits": [
+          "r52"
+         ]
+        },
+        "r54": {
+         "inherits": [
+          "r53"
+         ]
+        },
+        "r55": {
+         "inherits": [
+          "r54"
+         ]
+        },
+        "r56": {
+         "inherits": [
+          "r55"
+         ]
+        },
+        "r57": {
+         "inherits": [
+          "r56"
+         ]
+        },
+        "r58": {
+         "inherits": [
+          "r57"
+         ]
+        },
+        "r59": {
+         "inherits": [
+          "r58"
+         ]
+        },
+        "r60": {
+         "inherits": [
+          "r59"
+         ]
+        },
+        "r61": {
+         "inherits": [
+          "r60"
+         ]
+        },
+        "r62": {
+         "inherits": [
+          "r61"
+         ]
+        },
+        "r63": {
+         "inherits": [
+          "r62"
+         ]
+        },
+        "r64": {
+         "inherits": [
+          "r63"
+         ]
+        }
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_policy"
+     }
+    },
+    {
+     "name": "policy inheritance chain of 64 accepted",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "r0": {},
+        "r1": {
+         "inherits": [
+          "r0"
+         ]
+        },
+        "r2": {
+         "inherits": [
+          "r1"
+         ]
+        },
+        "r3": {
+         "inherits": [
+          "r2"
+         ]
+        },
+        "r4": {
+         "inherits": [
+          "r3"
+         ]
+        },
+        "r5": {
+         "inherits": [
+          "r4"
+         ]
+        },
+        "r6": {
+         "inherits": [
+          "r5"
+         ]
+        },
+        "r7": {
+         "inherits": [
+          "r6"
+         ]
+        },
+        "r8": {
+         "inherits": [
+          "r7"
+         ]
+        },
+        "r9": {
+         "inherits": [
+          "r8"
+         ]
+        },
+        "r10": {
+         "inherits": [
+          "r9"
+         ]
+        },
+        "r11": {
+         "inherits": [
+          "r10"
+         ]
+        },
+        "r12": {
+         "inherits": [
+          "r11"
+         ]
+        },
+        "r13": {
+         "inherits": [
+          "r12"
+         ]
+        },
+        "r14": {
+         "inherits": [
+          "r13"
+         ]
+        },
+        "r15": {
+         "inherits": [
+          "r14"
+         ]
+        },
+        "r16": {
+         "inherits": [
+          "r15"
+         ]
+        },
+        "r17": {
+         "inherits": [
+          "r16"
+         ]
+        },
+        "r18": {
+         "inherits": [
+          "r17"
+         ]
+        },
+        "r19": {
+         "inherits": [
+          "r18"
+         ]
+        },
+        "r20": {
+         "inherits": [
+          "r19"
+         ]
+        },
+        "r21": {
+         "inherits": [
+          "r20"
+         ]
+        },
+        "r22": {
+         "inherits": [
+          "r21"
+         ]
+        },
+        "r23": {
+         "inherits": [
+          "r22"
+         ]
+        },
+        "r24": {
+         "inherits": [
+          "r23"
+         ]
+        },
+        "r25": {
+         "inherits": [
+          "r24"
+         ]
+        },
+        "r26": {
+         "inherits": [
+          "r25"
+         ]
+        },
+        "r27": {
+         "inherits": [
+          "r26"
+         ]
+        },
+        "r28": {
+         "inherits": [
+          "r27"
+         ]
+        },
+        "r29": {
+         "inherits": [
+          "r28"
+         ]
+        },
+        "r30": {
+         "inherits": [
+          "r29"
+         ]
+        },
+        "r31": {
+         "inherits": [
+          "r30"
+         ]
+        },
+        "r32": {
+         "inherits": [
+          "r31"
+         ]
+        },
+        "r33": {
+         "inherits": [
+          "r32"
+         ]
+        },
+        "r34": {
+         "inherits": [
+          "r33"
+         ]
+        },
+        "r35": {
+         "inherits": [
+          "r34"
+         ]
+        },
+        "r36": {
+         "inherits": [
+          "r35"
+         ]
+        },
+        "r37": {
+         "inherits": [
+          "r36"
+         ]
+        },
+        "r38": {
+         "inherits": [
+          "r37"
+         ]
+        },
+        "r39": {
+         "inherits": [
+          "r38"
+         ]
+        },
+        "r40": {
+         "inherits": [
+          "r39"
+         ]
+        },
+        "r41": {
+         "inherits": [
+          "r40"
+         ]
+        },
+        "r42": {
+         "inherits": [
+          "r41"
+         ]
+        },
+        "r43": {
+         "inherits": [
+          "r42"
+         ]
+        },
+        "r44": {
+         "inherits": [
+          "r43"
+         ]
+        },
+        "r45": {
+         "inherits": [
+          "r44"
+         ]
+        },
+        "r46": {
+         "inherits": [
+          "r45"
+         ]
+        },
+        "r47": {
+         "inherits": [
+          "r46"
+         ]
+        },
+        "r48": {
+         "inherits": [
+          "r47"
+         ]
+        },
+        "r49": {
+         "inherits": [
+          "r48"
+         ]
+        },
+        "r50": {
+         "inherits": [
+          "r49"
+         ]
+        },
+        "r51": {
+         "inherits": [
+          "r50"
+         ]
+        },
+        "r52": {
+         "inherits": [
+          "r51"
+         ]
+        },
+        "r53": {
+         "inherits": [
+          "r52"
+         ]
+        },
+        "r54": {
+         "inherits": [
+          "r53"
+         ]
+        },
+        "r55": {
+         "inherits": [
+          "r54"
+         ]
+        },
+        "r56": {
+         "inherits": [
+          "r55"
+         ]
+        },
+        "r57": {
+         "inherits": [
+          "r56"
+         ]
+        },
+        "r58": {
+         "inherits": [
+          "r57"
+         ]
+        },
+        "r59": {
+         "inherits": [
+          "r58"
+         ]
+        },
+        "r60": {
+         "inherits": [
+          "r59"
+         ]
+        },
+        "r61": {
+         "inherits": [
+          "r60"
+         ]
+        },
+        "r62": {
+         "inherits": [
+          "r61"
+         ]
+        },
+        "r63": {
+         "inherits": [
+          "r62"
+         ]
+        }
+       }
+      }
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "policy chain limit independent of key order",
+     "fn": "validatePolicy",
+     "args": [
+      {
+       "roles": {
+        "r64": {
+         "inherits": [
+          "r63"
+         ]
+        },
+        "r63": {
+         "inherits": [
+          "r62"
+         ]
+        },
+        "r62": {
+         "inherits": [
+          "r61"
+         ]
+        },
+        "r61": {
+         "inherits": [
+          "r60"
+         ]
+        },
+        "r60": {
+         "inherits": [
+          "r59"
+         ]
+        },
+        "r59": {
+         "inherits": [
+          "r58"
+         ]
+        },
+        "r58": {
+         "inherits": [
+          "r57"
+         ]
+        },
+        "r57": {
+         "inherits": [
+          "r56"
+         ]
+        },
+        "r56": {
+         "inherits": [
+          "r55"
+         ]
+        },
+        "r55": {
+         "inherits": [
+          "r54"
+         ]
+        },
+        "r54": {
+         "inherits": [
+          "r53"
+         ]
+        },
+        "r53": {
+         "inherits": [
+          "r52"
+         ]
+        },
+        "r52": {
+         "inherits": [
+          "r51"
+         ]
+        },
+        "r51": {
+         "inherits": [
+          "r50"
+         ]
+        },
+        "r50": {
+         "inherits": [
+          "r49"
+         ]
+        },
+        "r49": {
+         "inherits": [
+          "r48"
+         ]
+        },
+        "r48": {
+         "inherits": [
+          "r47"
+         ]
+        },
+        "r47": {
+         "inherits": [
+          "r46"
+         ]
+        },
+        "r46": {
+         "inherits": [
+          "r45"
+         ]
+        },
+        "r45": {
+         "inherits": [
+          "r44"
+         ]
+        },
+        "r44": {
+         "inherits": [
+          "r43"
+         ]
+        },
+        "r43": {
+         "inherits": [
+          "r42"
+         ]
+        },
+        "r42": {
+         "inherits": [
+          "r41"
+         ]
+        },
+        "r41": {
+         "inherits": [
+          "r40"
+         ]
+        },
+        "r40": {
+         "inherits": [
+          "r39"
+         ]
+        },
+        "r39": {
+         "inherits": [
+          "r38"
+         ]
+        },
+        "r38": {
+         "inherits": [
+          "r37"
+         ]
+        },
+        "r37": {
+         "inherits": [
+          "r36"
+         ]
+        },
+        "r36": {
+         "inherits": [
+          "r35"
+         ]
+        },
+        "r35": {
+         "inherits": [
+          "r34"
+         ]
+        },
+        "r34": {
+         "inherits": [
+          "r33"
+         ]
+        },
+        "r33": {
+         "inherits": [
+          "r32"
+         ]
+        },
+        "r32": {
+         "inherits": [
+          "r31"
+         ]
+        },
+        "r31": {
+         "inherits": [
+          "r30"
+         ]
+        },
+        "r30": {
+         "inherits": [
+          "r29"
+         ]
+        },
+        "r29": {
+         "inherits": [
+          "r28"
+         ]
+        },
+        "r28": {
+         "inherits": [
+          "r27"
+         ]
+        },
+        "r27": {
+         "inherits": [
+          "r26"
+         ]
+        },
+        "r26": {
+         "inherits": [
+          "r25"
+         ]
+        },
+        "r25": {
+         "inherits": [
+          "r24"
+         ]
+        },
+        "r24": {
+         "inherits": [
+          "r23"
+         ]
+        },
+        "r23": {
+         "inherits": [
+          "r22"
+         ]
+        },
+        "r22": {
+         "inherits": [
+          "r21"
+         ]
+        },
+        "r21": {
+         "inherits": [
+          "r20"
+         ]
+        },
+        "r20": {
+         "inherits": [
+          "r19"
+         ]
+        },
+        "r19": {
+         "inherits": [
+          "r18"
+         ]
+        },
+        "r18": {
+         "inherits": [
+          "r17"
+         ]
+        },
+        "r17": {
+         "inherits": [
+          "r16"
+         ]
+        },
+        "r16": {
+         "inherits": [
+          "r15"
+         ]
+        },
+        "r15": {
+         "inherits": [
+          "r14"
+         ]
+        },
+        "r14": {
+         "inherits": [
+          "r13"
+         ]
+        },
+        "r13": {
+         "inherits": [
+          "r12"
+         ]
+        },
+        "r12": {
+         "inherits": [
+          "r11"
+         ]
+        },
+        "r11": {
+         "inherits": [
+          "r10"
+         ]
+        },
+        "r10": {
+         "inherits": [
+          "r9"
+         ]
+        },
+        "r9": {
+         "inherits": [
+          "r8"
+         ]
+        },
+        "r8": {
+         "inherits": [
+          "r7"
+         ]
+        },
+        "r7": {
+         "inherits": [
+          "r6"
+         ]
+        },
+        "r6": {
+         "inherits": [
+          "r5"
+         ]
+        },
+        "r5": {
+         "inherits": [
+          "r4"
+         ]
+        },
+        "r4": {
+         "inherits": [
+          "r3"
+         ]
+        },
+        "r3": {
+         "inherits": [
+          "r2"
+         ]
+        },
+        "r2": {
+         "inherits": [
+          "r1"
+         ]
+        },
+        "r1": {
+         "inherits": [
+          "r0"
+         ]
+        },
+        "r0": {}
+       }
+      }
+     ],
+     "expect": {
+      "error": "invalid_policy"
+     }
+    },
+    {
+     "name": "effective permissions",
+     "fn": "effectivePermissions",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor"
+      ]
+     ],
+     "expect": {
+      "result": {
+       "allow": [
+        "comments.*.own",
+        "comments.read",
+        "posts.*",
+        "posts.read"
+       ],
+       "deny": [
+        "posts.delete"
+       ]
+      }
+     }
+    },
+    {
+     "name": "effective permissions union",
+     "fn": "effectivePermissions",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer",
+       "auditor"
+      ]
+     ],
+     "expect": {
+      "result": {
+       "allow": [
+        "*.read",
+        "comments.read",
+        "posts.read"
+       ],
+       "deny": [
+        "billing.read"
+       ]
+      }
+     }
+    },
+    {
+     "name": "unknown function",
+     "fn": "nope",
+     "args": [],
+     "expect": {
+      "error": "invalid_option"
+     }
+    }
+   ]
+  },
+  {
+   "name": "generated-regression",
+   "cases": [
+    {
+     "name": "generated 001 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "86b023f9e5ea26715909ea"
+      },
+      412782669067,
+      {
+       "digits": 6,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "236575"
+     }
+    },
+    {
+     "name": "generated 002 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "672d7b833351c19032cbc272cc7dbfddad3fe09c061ddfe57687"
+      },
+      746546626091,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "43832393"
+     }
+    },
+    {
+     "name": "generated 003 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "02344f30ce54a3de69f9ae8fb909"
+      },
+      688171401619,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "09305720"
+     }
+    },
+    {
+     "name": "generated 004 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "a53eb36c6d09b376773105adc2a5b1e65b97ecbafb1936f0268e8c77d0b3d52f3f17e5"
+      },
+      262051582336,
+      {
+       "digits": 6,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "926345"
+     }
+    },
+    {
+     "name": "generated 005 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "9cdc4680c64af550ae5887222b9715"
+      },
+      818784013390,
+      {
+       "digits": 6,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "702946"
+     }
+    },
+    {
+     "name": "generated 006 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "c2fb831997738798d8719174d6132d992904755e7d27294c32d7f878128162a11fe39a2403699e7ad266df96e9a2"
+      },
+      338934898376,
+      {
+       "digits": 7,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "0422997"
+     }
+    },
+    {
+     "name": "generated 007 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "15d38d941ac83046df8c7faa56f2421a1cb45d17cdf4199c0ae67635d58e8e98f44378d3ec1ba82436f6585e5ba2e8fd"
+      },
+      554729461669,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "54380841"
+     }
+    },
+    {
+     "name": "generated 008 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "8ad3c46f787d83f445bd09dbf555ee6a17d608fbc2f68ee41a008e90bbc10a04d4dfa4adc7ee43d8a12378"
+      },
+      503272771835,
+      {
+       "digits": 6,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "014771"
+     }
+    },
+    {
+     "name": "generated 009 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "1a92ca294b6492225c92a3aa34255c26c48360a0"
+      },
+      518610239028,
+      {
+       "digits": 8,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "45225274"
+     }
+    },
+    {
+     "name": "generated 010 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "677aba614eaca8f1bfcc366eb3bb826d302e31c07a"
+      },
+      95830678939,
+      {
+       "digits": 6,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "624157"
+     }
+    },
+    {
+     "name": "generated 011 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "ea8adcd6d9b9002d78446c0f4d2b31e4f22ffe0786"
+      },
+      219000101089,
+      {
+       "digits": 6,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "434817"
+     }
+    },
+    {
+     "name": "generated 012 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "7152be21d914762143950da9110acfba"
+      },
+      912492156028,
+      {
+       "digits": 6,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "459462"
+     }
+    },
+    {
+     "name": "generated 013 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "448c36b2abfd30aae78539667ce209a4b7fc2e0bacd4fa0a01229d"
+      },
+      380718827247,
+      {
+       "digits": 8,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "33807698"
+     }
+    },
+    {
+     "name": "generated 014 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "6222774170cb5fb17eb5b691a946e5351ed986d41300e9b45e40dc"
+      },
+      696663856506,
+      {
+       "digits": 6,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "804801"
+     }
+    },
+    {
+     "name": "generated 015 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "66e03c447c614c50c68e6580044e"
+      },
+      158863723278,
+      {
+       "digits": 7,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "5847788"
+     }
+    },
+    {
+     "name": "generated 016 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "51fdf481142bad76834bf7ccd03bd91c2daa21830e0dd568100ab365e04f5f3206d5"
+      },
+      37223577499,
+      {
+       "digits": 6,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "450133"
+     }
+    },
+    {
+     "name": "generated 017 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "3cd778e3c7282634296dea4c7904cb2b29440e563ae9af374018fe65fe412cb008355a71"
+      },
+      937310874462,
+      {
+       "digits": 6,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "093712"
+     }
+    },
+    {
+     "name": "generated 018 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "8b833cc8e77959349facd558a41fef6b322f1060038e6b1e211236897907a1"
+      },
+      699572801589,
+      {
+       "digits": 7,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "5575737"
+     }
+    },
+    {
+     "name": "generated 019 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "de5e78ce34da8dfb4f5bb4c7e075bcb23172c8b4a3d6d8bc2fdd3f31e8fb2d74765a265a9b5e"
+      },
+      531005144119,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "80610193"
+     }
+    },
+    {
+     "name": "generated 020 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "08cb9afa4dbc79a5a3ff61140866cc"
+      },
+      999030947685,
+      {
+       "digits": 8,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "08742792"
+     }
+    },
+    {
+     "name": "generated 021 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "a8d66c3bdaaac9c527135e7412db266bb1a72df19a561991e2cdde31bd4e7a792966634b"
+      },
+      641460776329,
+      {
+       "digits": 8,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "53486980"
+     }
+    },
+    {
+     "name": "generated 022 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "f68532fad4136c68bc0ca3f48f4740448e58d3cb0e1c57aecd6fba79f0e15c28ffc2843331"
+      },
+      112240791320,
+      {
+       "digits": 7,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "8055510"
+     }
+    },
+    {
+     "name": "generated 023 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "1c8b89f7394de208224c028eb7d863d983070fe37b80d7f10a3306b207debf0c41eb52763f"
+      },
+      622124195098,
+      {
+       "digits": 7,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "0051401"
+     }
+    },
+    {
+     "name": "generated 024 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "82f0702ec77968ed8f7bd9146aae08cf88a496c8"
+      },
+      633367776870,
+      {
+       "digits": 7,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "5902439"
+     }
+    },
+    {
+     "name": "generated 025 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "6939b7b0f2a493c01a9950f11e8471c66cb702d941d6a72be6df571d84fda9a2cbe7abf5f7b945f2594932fa"
+      },
+      431523323059,
+      {
+       "digits": 7,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "8678544"
+     }
+    },
+    {
+     "name": "generated 026 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "24f0cabf1f678c10f64e4b2e54c99b3338"
+      },
+      217111349105,
+      {
+       "digits": 7,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "2878173"
+     }
+    },
+    {
+     "name": "generated 027 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "c2d4929a329358c4233a1d4be80985ecb6111af3"
+      },
+      418838381767,
+      {
+       "digits": 7,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "5535718"
+     }
+    },
+    {
+     "name": "generated 028 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "97c8a52dc273974a221c4b53899cd230fe17aae8c460860a"
+      },
+      889290109276,
+      {
+       "digits": 8,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "26397994"
+     }
+    },
+    {
+     "name": "generated 029 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "ee8c88207bda6984f97d4c46be1b7a8a8eba9553d84bc7fd5ad882eeec8991579aa6102b53162738950b303f4ee5fa"
+      },
+      456404685974,
+      {
+       "digits": 8,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "52131180"
+     }
+    },
+    {
+     "name": "generated 030 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "42b1a5ac7f853470cc80989c9f0d6888b95c74cf66e0"
+      },
+      950310707092,
+      {
+       "digits": 8,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "90258706"
+     }
+    },
+    {
+     "name": "generated 031 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "471f66c807ca2a8717aed63137d9e6df00cd9a279a86c4b49316e246c25c85"
+      },
+      780656576156,
+      {
+       "digits": 8,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "12097802"
+     }
+    },
+    {
+     "name": "generated 032 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "e133ec35f242ecce3b85a49eec"
+      },
+      134673595428,
+      {
+       "digits": 7,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "0926192"
+     }
+    },
+    {
+     "name": "generated 033 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "dbf3d094cdb4dd9132fff98020988ec349ad06072bb44c8758c26fd3dc20b7865f4d82683986"
+      },
+      687936782836,
+      {
+       "digits": 7,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "3468292"
+     }
+    },
+    {
+     "name": "generated 034 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "e41a3a4efef3eb1cd201ab6088c849d7e2044b83bece46"
+      },
+      445625782012,
+      {
+       "digits": 6,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "649173"
+     }
+    },
+    {
+     "name": "generated 035 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "686ae676d8e69f5883579a8cf52437d14971294e"
+      },
+      894689798355,
+      {
+       "digits": 6,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "893359"
+     }
+    },
+    {
+     "name": "generated 036 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "f1f3d3fd9b36330fca42473df5184f51de2afcf15b0423e1c6d2f68c2676"
+      },
+      84535598754,
+      {
+       "digits": 8,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "01604908"
+     }
+    },
+    {
+     "name": "generated 037 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "f4397210f9d36c48e7318fdf937e"
+      },
+      613066911697,
+      {
+       "digits": 6,
+       "algorithm": "SHA256"
+      }
+     ],
+     "expect": {
+      "result": "592429"
+     }
+    },
+    {
+     "name": "generated 038 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "6b5d450ba77d0304992739dc6243c66a3597a5e1c340c43cc884f8b4"
+      },
+      709973216056,
+      {
+       "digits": 7,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "2433855"
+     }
+    },
+    {
+     "name": "generated 039 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "3cc48156ffe2e80377e5c2dacaaaf79b41296dc6f5c86102"
+      },
+      542998803779,
+      {
+       "digits": 8,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "43791406"
+     }
+    },
+    {
+     "name": "generated 040 hotp",
+     "fn": "hotp",
+     "args": [
+      {
+       "hex": "693bb84a9cb0b4806afb"
+      },
+      977861881256,
+      {
+       "digits": 7,
+       "algorithm": "SHA1"
+      }
+     ],
+     "expect": {
+      "result": "9825145"
+     }
+    },
+    {
+     "name": "generated 041 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "bb0d38f3033ccadca0c8b528b29f71da17a52f49"
+      },
+      1069533348,
+      {
+       "period": 30,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "96739332"
+     }
+    },
+    {
+     "name": "generated 042 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "fd5deb0123674b876bb8fd2e491e1bbbe163bb31"
+      },
+      3749639987,
+      {
+       "period": 30,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "61434413"
+     }
+    },
+    {
+     "name": "generated 043 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "b4dd56752d42d99b7c5436ce3ac7429613ac4d04"
+      },
+      1082309305,
+      {
+       "period": 30,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "24234053"
+     }
+    },
+    {
+     "name": "generated 044 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "03eeda4bb9b2615b1cac5dc2c3a93d0c8e0230fe"
+      },
+      422123908,
+      {
+       "period": 15,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "15394843"
+     }
+    },
+    {
+     "name": "generated 045 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "bfc5a57217c83adf62066fbe7bab73c5a7ce369d"
+      },
+      3430065155,
+      {
+       "period": 30,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "562783"
+     }
+    },
+    {
+     "name": "generated 046 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "dc84b314c0167e0c0708d9eae5d7b485c32b0269"
+      },
+      3914175510,
+      {
+       "period": 60,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "750676"
+     }
+    },
+    {
+     "name": "generated 047 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "526dba936c331a222593d19efdeb9bc161e47eb1"
+      },
+      3204533576,
+      {
+       "period": 60,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "01696262"
+     }
+    },
+    {
+     "name": "generated 048 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "63c86637a5d2eaeb9de3bf7747eade15fac05753"
+      },
+      3045547485,
+      {
+       "period": 60,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "87509938"
+     }
+    },
+    {
+     "name": "generated 049 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "c2e60ae6776fd7b323fd32a482443a1d7936117d"
+      },
+      273841381,
+      {
+       "period": 60,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "42346935"
+     }
+    },
+    {
+     "name": "generated 050 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "0ffe2f263b8771eaa3659762ab941063e214669a"
+      },
+      222105979,
+      {
+       "period": 60,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "460938"
+     }
+    },
+    {
+     "name": "generated 051 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "221e2b1db2891fa74c42bc3ac066bc650724801f"
+      },
+      1370962202,
+      {
+       "period": 60,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "839433"
+     }
+    },
+    {
+     "name": "generated 052 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "d455804578315e71a23157f74d99c3216028c715"
+      },
+      1721605360,
+      {
+       "period": 15,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "628095"
+     }
+    },
+    {
+     "name": "generated 053 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "0cd780eb0b2d239406236700a64e298d82dbdca5"
+      },
+      703584194,
+      {
+       "period": 15,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "86667720"
+     }
+    },
+    {
+     "name": "generated 054 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "e78c691b74ed6537f5bf4c2346cb7dd6473fe676"
+      },
+      1569849014,
+      {
+       "period": 60,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "37150820"
+     }
+    },
+    {
+     "name": "generated 055 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "e916ac2a8abb3648ae8ba50e965364868ad1378e"
+      },
+      2376651763,
+      {
+       "period": 30,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "33552709"
+     }
+    },
+    {
+     "name": "generated 056 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "e62561991302ffa3b2553188a2732c9df655f490"
+      },
+      2259037971,
+      {
+       "period": 15,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "409101"
+     }
+    },
+    {
+     "name": "generated 057 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "67c623d7fee82a6f8bbe2cd41d0722abe07e1686"
+      },
+      3795644760,
+      {
+       "period": 30,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "384753"
+     }
+    },
+    {
+     "name": "generated 058 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "1770f7f92f429acf5b18e340baed268d4ec7a5ad"
+      },
+      2777813911,
+      {
+       "period": 60,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "477344"
+     }
+    },
+    {
+     "name": "generated 059 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "ea57322d814920a92aa7d353962c4341eba9a761"
+      },
+      1146000862,
+      {
+       "period": 30,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "08252019"
+     }
+    },
+    {
+     "name": "generated 060 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "f9474a2926760848ce1332cd07cbc70ae233f025"
+      },
+      3418456077,
+      {
+       "period": 60,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "01049785"
+     }
+    },
+    {
+     "name": "generated 061 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "44e453074d6ac10baf60e2cb42aa81a7342ff5aa"
+      },
+      979861259,
+      {
+       "period": 30,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "480195"
+     }
+    },
+    {
+     "name": "generated 062 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "8f64026648a1de6ccefc7b141b511eb1e4dc17b0"
+      },
+      55769443,
+      {
+       "period": 60,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "212549"
+     }
+    },
+    {
+     "name": "generated 063 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "e2a76b47010b1651ae981141e7e06b134fcb0811"
+      },
+      2439854502,
+      {
+       "period": 60,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "98949563"
+     }
+    },
+    {
+     "name": "generated 064 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "be74ccc48b3048da6040d0a153634c88aba22959"
+      },
+      19496440,
+      {
+       "period": 60,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "03186664"
+     }
+    },
+    {
+     "name": "generated 065 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "b2e4ecbd8b728a775b997bd6dd5a55f14d0e023d"
+      },
+      2336517333,
+      {
+       "period": 30,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "734266"
+     }
+    },
+    {
+     "name": "generated 066 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "df6344e10591b6027f7d861d6b67b71cbb38cbd1"
+      },
+      2374581336,
+      {
+       "period": 30,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "913221"
+     }
+    },
+    {
+     "name": "generated 067 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "a9c7632037b517402783060f03203bff8a9ef0a0"
+      },
+      3606289863,
+      {
+       "period": 30,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "48970976"
+     }
+    },
+    {
+     "name": "generated 068 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "603732b427e1a825ba212865938e5ac46795dc2e"
+      },
+      2506154060,
+      {
+       "period": 60,
+       "digits": 8
+      }
+     ],
+     "expect": {
+      "result": "05203671"
+     }
+    },
+    {
+     "name": "generated 069 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "a2e25e2abb8ab38c2a29c96e390cc33746d080f1"
+      },
+      54557800,
+      {
+       "period": 15,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "128758"
+     }
+    },
+    {
+     "name": "generated 070 totp",
+     "fn": "totp",
+     "args": [
+      {
+       "hex": "ceb1b71d6ffddb4ed1570fc11584f40e2c847a26"
+      },
+      3278949737,
+      {
+       "period": 60,
+       "digits": 6
+      }
+     ],
+     "expect": {
+      "result": "556759"
+     }
+    },
+    {
+     "name": "generated 071 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "5c2ec2764d31b84b5c4cbe7e"
+      }
+     ],
+     "expect": {
+      "result": "LQXME5SNGG4EWXCMXZ7A===="
+     }
+    },
+    {
+     "name": "generated 072 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "2bd363f5db8752f10f4159a8d3"
+      }
+     ],
+     "expect": {
+      "result": "FPJWH5O3Q5JPCD2BLGUNG==="
+     }
+    },
+    {
+     "name": "generated 073 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "4c3b5bc62d575f7b4b942f984128930fe491"
+      }
+     ],
+     "expect": {
+      "result": "JQ5VXRRNK5PXWS4UF6MECKETB7SJC==="
+     }
+    },
+    {
+     "name": "generated 074 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "839e4d3bfdf38c48"
+      }
+     ],
+     "expect": {
+      "result": "QOPE2O756OGEQ==="
+     }
+    },
+    {
+     "name": "generated 075 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "0f8a9c34efd56cd6e2906cb953c3e93b6f2aef7622404a471843f780"
+      }
+     ],
+     "expect": {
+      "result": "B6FJYNHP2VWNNYUQNS4VHQ7JHNXSV33WEJAEURYYIP3YA==="
+     }
+    },
+    {
+     "name": "generated 076 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "31d3efb3c1ccba6adb58ee3b6cf5570220405be087c9e0af183a456477"
+      }
+     ],
+     "expect": {
+      "result": "GHJ67M6BZS5GVW2Y5Y5WZ5KXAIQEAW7AQ7E6BLYYHJCWI5Y="
+     }
+    },
+    {
+     "name": "generated 077 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "afe820bd2aaf4a719d2d3d3b75694659"
+      }
+     ],
+     "expect": {
+      "result": "V7UCBPJKV5FHDHJNHU5XK2KGLE======"
+     }
+    },
+    {
+     "name": "generated 078 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "6a6bae2f7ba100ced2efbef6948eb5bf49b17911e6"
+      }
+     ],
+     "expect": {
+      "result": "NJV24L33UEAM5UXPX33JJDVVX5E3C6IR4Y======"
+     }
+    },
+    {
+     "name": "generated 079 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "bb7cee6f737731a6dab1"
+      }
+     ],
+     "expect": {
+      "result": "XN6O433TO4Y2NWVR"
+     }
+    },
+    {
+     "name": "generated 080 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "2c9b2d7d4199ca2dbe6fbe7195f21508c2"
+      }
+     ],
+     "expect": {
+      "result": "FSNS27KBTHFC3PTPXZYZL4QVBDBA===="
+     }
+    },
+    {
+     "name": "generated 081 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "e11b39b62a67df2ca4c6bc68aaaf63f5cca1141abed790"
+      }
+     ],
+     "expect": {
+      "result": "4ENTTNRKM7PSZJGGXRUKVL3D6XGKCFA2X3LZA==="
+     }
+    },
+    {
+     "name": "generated 082 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "0ced05979744e0526405"
+      }
+     ],
+     "expect": {
+      "result": "BTWQLF4XITQFEZAF"
+     }
+    },
+    {
+     "name": "generated 083 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "adc36705abaf2d5df4e409ac140780a2b3cbec0f5a39b439b27ad76afa"
+      }
+     ],
+     "expect": {
+      "result": "VXBWOBNLV4WV35HEBGWBIB4AUKZ4X3APLI43IONSPLLWV6Q="
+     }
+    },
+    {
+     "name": "generated 084 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "c1d1d4337cb5723a5a"
+      }
+     ],
+     "expect": {
+      "result": "YHI5IM34WVZDUWQ="
+     }
+    },
+    {
+     "name": "generated 085 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "747df7d2a4d2fda3b986df9f152710cf71d6662c4942d3457e6d45c1"
+      }
+     ],
+     "expect": {
+      "result": "OR67PUVE2L62HOMG36PRKJYQZ5Y5MZRMJFBNGRL6NVC4C==="
+     }
+    },
+    {
+     "name": "generated 086 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "e9203ac65b73a89e9c98889dd3cf"
+      }
+     ],
+     "expect": {
+      "result": "5EQDVRS3OOUJ5HEYRCO5HTY="
+     }
+    },
+    {
+     "name": "generated 087 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "56292cd50467008ec003c3f3d87b1c0e13b38f16a438c5b653f05e8b1c"
+      }
+     ],
+     "expect": {
+      "result": "KYUSZVIEM4AI5QADYPZ5Q6Y4BYJ3HDYWUQ4MLNST6BPIWHA="
+     }
+    },
+    {
+     "name": "generated 088 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "8602aa36a7e2b0c9"
+      }
+     ],
+     "expect": {
+      "result": "QYBKUNVH4KYMS==="
+     }
+    },
+    {
+     "name": "generated 089 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "e4ada41721ac87e5d2fad0a529ee1e57"
+      }
+     ],
+     "expect": {
+      "result": "4SW2IFZBVSD6LUX22CSST3Q6K4======"
+     }
+    },
+    {
+     "name": "generated 090 base32",
+     "fn": "base32Encode",
+     "args": [
+      {
+       "hex": "d2534918a06d0d62b52339ec4418eb"
+      }
+     ],
+     "expect": {
+      "result": "2JJUSGFANUGWFNJDHHWEIGHL"
+     }
+    },
+    {
+     "name": "generated 091 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MCIsImV4cCI6MTY5OTk5OTc0NywiaXNzIjoiaHR0cHM6Ly9pZC5leGFtcGxlLmNvbSJ9.ATD9qmH8JmhZaqpcUuKD80oCgRw1-JRO0wkY9kZwSww",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 092 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MSIsImV4cCI6MTcwMDAwMDQwOSwibmJmIjoxNjk5OTk5OTQ0fQ.sPvUM3PFCluOLiFymzs2sUiY-sRFNlBmOHiORZkunmk",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "error": "invalid_audience"
+     }
+    },
+    {
+     "name": "generated 093 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MiIsImV4cCI6MTcwMDAwMDE4NCwiYXVkIjoiYXBpIn0.p9ixyC9P7lTijLANz5Y2srghmJqYDNEGbznFUAmC8AA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "generated 094 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MyIsImV4cCI6MTY5OTk5OTkyNywibmJmIjoxNjk5OTk5OTc1LCJhdWQiOiJ3ZWIifQ.oJFyfJsHQkjWREHZXdAahoD8U3KKqfgoacHWYMVMfZw",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 095 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1NCIsImV4cCI6MTY5OTk5OTc1MSwiYXVkIjpbImFwaSIsIndlYiJdfQ.oyafOg6Dj_Vd_M6mAZA0vFmaaB71_9N3IIpKFgSaq_8",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com",
+       "leeway": 60
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 096 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1NSIsImV4cCI6MTcwMDAwMDM2N30.YXk7VeCNJhrmoGA7aTYdwi8Yw1nxYfLvTVNJvvypcAA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "generated 097 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1NiIsImV4cCI6MTcwMDAwMDE2MiwibmJmIjoxNjk5OTk5OTY3LCJpc3MiOiJodHRwczovL2lkLmV4YW1wbGUuY29tIn0.6TG8HmIrXs1MbYE6jPjPVuwDPe_OQBZFJEtIismUIxM",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api",
+       "leeway": 60
+      }
+     ],
+     "expect": {
+      "error": "invalid_audience"
+     }
+    },
+    {
+     "name": "generated 098 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1NyIsImV4cCI6MTcwMDAwMDAzMCwiaXNzIjoiaHR0cHM6Ly9pZC5leGFtcGxlLmNvbSJ9.pjvCuIEGvaour4ZvtQXobVMdMtk2kcsUE3u-WzevoAA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "leeway": 60
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "generated 099 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1OCIsImV4cCI6MTcwMDAwMDI0MSwibmJmIjoxNjk5OTk5OTM4LCJpc3MiOiJodHRwczovL2lkLmV4YW1wbGUuY29tIn0.Ii8-3oAxA3GyaBnzhLBZDSVJn3WjG0Eu7MNRnyJAyew",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "sub": "u8",
+        "exp": 1700000241,
+        "nbf": 1699999938,
+        "iss": "https://id.example.com"
+       }
+      }
+     }
+    },
+    {
+     "name": "generated 100 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1OSIsImV4cCI6MTY5OTk5OTg5NiwiaXNzIjoiaHR0cHM6Ly9pZC5leGFtcGxlLmNvbSJ9.hmBVjAF7bJN86BLVWPeykH2peoN_eWhMiIV15sYVqBQ",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "leeway": 5
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 101 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MTAiLCJleHAiOjE3MDAwMDAxODAsImF1ZCI6IndlYiJ9.DrPhGmnUzIO8wezSGdXzQZf1lboygVHUpzgNXEosNeM",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com",
+       "leeway": 0
+      }
+     ],
+     "expect": {
+      "error": "invalid_issuer"
+     }
+    },
+    {
+     "name": "generated 102 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MTEiLCJleHAiOjE3MDAwMDAxOTAsImlzcyI6Imh0dHBzOi8vaWQuZXhhbXBsZS5jb20ifQ.H8lI6d1m9flfg9r7sDDXs5LcveFreBBYAIMdW0mC514",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "error": "invalid_audience"
+     }
+    },
+    {
+     "name": "generated 103 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MTIiLCJleHAiOjE2OTk5OTk4MDIsIm5iZiI6MTY5OTk5OTk2MH0.Kz0i2qWoyqnJmejpJm_NLfFt8v1vZPXdhnVOP7FQJ58",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api",
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 104 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MTMiLCJleHAiOjE2OTk5OTk4OTgsImlzcyI6Im90aGVyIn0.xo9sU2pSkn7XZ735bj8NYDGdijJHeOy9lkVKSE9LhZY",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api",
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 105 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MTQiLCJleHAiOjE2OTk5OTk5MjcsImlzcyI6Im90aGVyIn0.qpmyod4Hcexg1WzAnmGGrTFZ5HrtPWTnib2yxB7oLYU",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 106 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MTUiLCJleHAiOjE3MDAwMDAwNzYsIm5iZiI6MTY5OTk5OTk3OX0.3BkLTPVRzI7SyAnEqr-L7CJIIfQg4kaQ9gZY2KbzuGY",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api",
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "invalid_issuer"
+     }
+    },
+    {
+     "name": "generated 107 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MTYiLCJleHAiOjE3MDAwMDAzNzcsIm5iZiI6MTY5OTk5OTk2NSwiYXVkIjoiYXBpIn0.DU1x23BdPZPk51R8QzVVJBjgS-a6RYnfyveDxPiMfBs",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "sub": "u16",
+        "exp": 1700000377,
+        "nbf": 1699999965,
+        "aud": "api"
+       }
+      }
+     }
+    },
+    {
+     "name": "generated 108 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MTciLCJleHAiOjE3MDAwMDA1NDcsImlzcyI6Im90aGVyIn0.gT7oaYpB1mDiE0aksuc3xhrYbStKyimB6WVT3V9MWks",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "invalid_issuer"
+     }
+    },
+    {
+     "name": "generated 109 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MTgiLCJleHAiOjE3MDAwMDAwOTEsIm5iZiI6MTY5OTk5OTk3NywiaXNzIjoiaHR0cHM6Ly9pZC5leGFtcGxlLmNvbSJ9.CKQhkwCfQrCbcGAc5fXGQp-V8mhb3vtCcYAsl6i4Koo",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "leeway": 5
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "sub": "u18",
+        "exp": 1700000091,
+        "nbf": 1699999977,
+        "iss": "https://id.example.com"
+       }
+      }
+     }
+    },
+    {
+     "name": "generated 110 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MTkiLCJleHAiOjE2OTk5OTk3OTQsImlzcyI6Im90aGVyIn0.QS-VAEcXZRGehxdOwuYuPAFB5Pmg6gyWU7MZK7bLXDo",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api",
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 111 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MjAiLCJleHAiOjE3MDAwMDAxODksImF1ZCI6ImFwaSIsImlzcyI6Im90aGVyIn0.poWegfqjS66zC1__nVK7Fh1r_VL4hkOuN3QA8LxTtIE",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "sub": "u20",
+        "exp": 1700000189,
+        "aud": "api",
+        "iss": "other"
+       }
+      }
+     }
+    },
+    {
+     "name": "generated 112 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MjEiLCJleHAiOjE3MDAwMDA2MzAsImF1ZCI6IndlYiIsImlzcyI6Im90aGVyIn0.wMyqq3Bj8lsTuX2FMwE7xGLpWoPwO0KvAONO9xb4guA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "leeway": 0
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "sub": "u21",
+        "exp": 1700000630,
+        "aud": "web",
+        "iss": "other"
+       }
+      }
+     }
+    },
+    {
+     "name": "generated 113 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MjIiLCJleHAiOjE3MDAwMDAwNDUsIm5iZiI6MTcwMDAwMDAyMiwiaXNzIjoib3RoZXIifQ.2bLfm50UNnC6HIDc2FRIta_SJkGt4nBW1tSkUeXjfAA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "generated 114 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MjMiLCJleHAiOjE2OTk5OTk5NjAsImF1ZCI6IndlYiJ9.8KcLGS8QF-915xWpVD__nBNfGQFvLMP8llHnjzVA1Zk",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 115 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MjQiLCJleHAiOjE2OTk5OTk5ODIsIm5iZiI6MTcwMDAwMDAxOH0.ijpyMnzgb3Dfdmc2Qg5gcN0qVeLQeG-tq1WvMxCLQAA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "generated 116 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MjUiLCJleHAiOjE3MDAwMDAxNjh9.4jEJClrgGBQkMfmM9d3Xh3b7yJfjnVmW8tAp6P-HYLI",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api",
+       "issuer": "https://id.example.com",
+       "leeway": 0
+      }
+     ],
+     "expect": {
+      "error": "invalid_issuer"
+     }
+    },
+    {
+     "name": "generated 117 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MjYiLCJleHAiOjE2OTk5OTk5NjMsImF1ZCI6WyJhcGkiLCJ3ZWIiXX0.7YL0JKkQp4ZSI7EnK0aAcmneq6GxNBSZ6hxTezUTfsw",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 118 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MjciLCJleHAiOjE2OTk5OTk5ODcsImF1ZCI6ImFwaSIsImlzcyI6Im90aGVyIn0.oab3qS26Fxii6p8eYHRxGrPcP68iAvEPn_a_UuqLQtE",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 119 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MjgiLCJleHAiOjE3MDAwMDA2MzMsIm5iZiI6MTY5OTk5OTk3MH0.C708O6WnN-Xn7ZQrjaU6C6R3c8YTQqaTCRMkzWqO92c",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "sub": "u28",
+        "exp": 1700000633,
+        "nbf": 1699999970
+       }
+      }
+     }
+    },
+    {
+     "name": "generated 120 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MjkiLCJleHAiOjE2OTk5OTk3NzUsImF1ZCI6WyJhcGkiLCJ3ZWIiXSwiaXNzIjoiaHR0cHM6Ly9pZC5leGFtcGxlLmNvbSJ9.ry2gfuSfN-ZE9SLLJffO8Kw9VZOYaFe-HCjsp2qFes0",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 121 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MzAiLCJleHAiOjE3MDAwMDAxMjIsImlzcyI6Imh0dHBzOi8vaWQuZXhhbXBsZS5jb20ifQ.ZqqRvHua5hGDRsOS_DiCJU1e9kgmk2RuWpBvWEeo7AA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "generated 122 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MzEiLCJleHAiOjE3MDAwMDAzMzUsIm5iZiI6MTY5OTk5OTk0NCwiYXVkIjpbImFwaSIsIndlYiJdLCJpc3MiOiJodHRwczovL2lkLmV4YW1wbGUuY29tIn0.Egpovq-ERXwLVC09_j9jMscy3RtO9S3NbD5XOFTBgAA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "generated 123 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MzIiLCJleHAiOjE2OTk5OTk3MzMsIm5iZiI6MTY5OTk5OTk5MiwiYXVkIjoid2ViIiwiaXNzIjoiaHR0cHM6Ly9pZC5leGFtcGxlLmNvbSJ9.lyCX0UQzuqIkWGQk2zogZkCAxQMnyxNQ3Zc1Ik7lzAA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com",
+       "leeway": 60
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "generated 124 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MzMiLCJleHAiOjE3MDAwMDA2MDEsIm5iZiI6MTY5OTk5OTk4MiwiYXVkIjoiYXBpIiwiaXNzIjoiaHR0cHM6Ly9pZC5leGFtcGxlLmNvbSJ9.enduEBBM7ZbHud7nJreSCH55q177GcXV85FP0f6Q_BU",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "result": {
+       "header": {
+        "alg": "HS256",
+        "typ": "JWT"
+       },
+       "claims": {
+        "sub": "u33",
+        "exp": 1700000601,
+        "nbf": 1699999982,
+        "aud": "api",
+        "iss": "https://id.example.com"
+       }
+      }
+     }
+    },
+    {
+     "name": "generated 125 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MzQiLCJleHAiOjE3MDAwMDAwOTksImlzcyI6Imh0dHBzOi8vaWQuZXhhbXBsZS5jb20ifQ.hZj1AtapVPJWJZUSvwuyPHf0h8fYxd8wT_QntYOkjj8",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "error": "invalid_audience"
+     }
+    },
+    {
+     "name": "generated 126 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MzUiLCJleHAiOjE2OTk5OTk5NzUsImlzcyI6Im90aGVyIn0.S_T6XTBN4QC51_Ybg1n5bi7iZ75IaaD6kpUWdpWNysU",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 127 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MzYiLCJleHAiOjE3MDAwMDA2NTYsIm5iZiI6MTY5OTk5OTk1Nn0.6Bw_Po64KwcNUNMV5hLArzW2UsAeiYXhBxMtf1WXrsA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api",
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "invalid_issuer"
+     }
+    },
+    {
+     "name": "generated 128 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MzciLCJleHAiOjE3MDAwMDA1MzIsIm5iZiI6MTY5OTk5OTkzNywiaXNzIjoib3RoZXIifQ.fqWjYth6usN9ikLMpRt7dkFTjQ-p2aQqOHejJip5VAA",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api",
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "invalid_signature"
+     }
+    },
+    {
+     "name": "generated 129 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MzgiLCJleHAiOjE2OTk5OTk4NTUsIm5iZiI6MTY5OTk5OTk0NiwiYXVkIjpbImFwaSIsIndlYiJdfQ.aQJdlvlj-g4AuFssABWjnEsdDdCMMvhH5ZKABBsOoTo",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "audience": "api"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 130 jwt",
+     "fn": "verifyJwt",
+     "args": [
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MzkiLCJleHAiOjE2OTk5OTk3NTcsImlzcyI6Imh0dHBzOi8vaWQuZXhhbXBsZS5jb20ifQ.uNN-eoCMkmD9ehD39TrvJ6P8EZ-Z48GeBFeXsIC-ntU",
+      "a-string-secret-at-least-256-bits-long",
+      {
+       "now": 1700000000,
+       "issuer": "https://id.example.com"
+      }
+     ],
+     "expect": {
+      "error": "token_expired"
+     }
+    },
+    {
+     "name": "generated 131 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "admin"
+      ],
+      "comments.delete"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "generated 132 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "admin"
+      ],
+      "users.posts.edit"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "generated 133 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "auditor"
+      ],
+      "comments.read.billing"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 134 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer",
+       "admin"
+      ],
+      "posts"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "generated 135 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "billing.delete.billing"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 136 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "posts"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 137 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "admin"
+      ],
+      "read.posts.posts"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "generated 138 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor"
+      ],
+      "comments"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 139 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "posts"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 140 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer"
+      ],
+      "billing.posts.users"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 141 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "delete.users.own"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 142 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "delete.own.posts"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 143 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor",
+       "viewer"
+      ],
+      "delete.read"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 144 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor",
+       "auditor"
+      ],
+      "posts"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 145 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "auditor"
+      ],
+      "read"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 146 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "auditor"
+      ],
+      "edit.delete"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 147 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer"
+      ],
+      "billing"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 148 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "billing.edit"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 149 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "auditor",
+       "editor"
+      ],
+      "comments.edit"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 150 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "billing"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 151 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "admin"
+      ],
+      "users"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "generated 152 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer"
+      ],
+      "posts.comments.users"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 153 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "admin"
+      ],
+      "delete"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "generated 154 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "auditor"
+      ],
+      "own.billing.delete"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 155 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer",
+       "auditor"
+      ],
+      "users.comments"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 156 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer"
+      ],
+      "read.billing.delete"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 157 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "billing.billing.own"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 158 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "own"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 159 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "auditor",
+       "viewer"
+      ],
+      "users.edit.own"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 160 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "viewer",
+       "auditor"
+      ],
+      "edit"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 161 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "users.comments"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 162 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "editor"
+      ],
+      "posts.billing"
+     ],
+     "expect": {
+      "result": true
+     }
+    },
+    {
+     "name": "generated 163 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "users.read.billing"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 164 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "auditor"
+      ],
+      "own.own.read"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 165 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "read.own"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 166 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "edit.comments"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 167 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "users"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 168 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "own.read.posts"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 169 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [
+       "auditor"
+      ],
+      "delete.delete"
+     ],
+     "expect": {
+      "result": false
+     }
+    },
+    {
+     "name": "generated 170 can",
+     "fn": "can",
+     "args": [
+      {
+       "roles": {
+        "viewer": {
+         "permissions": [
+          "posts.read",
+          "comments.read"
+         ]
+        },
+        "editor": {
+         "permissions": [
+          "posts.*",
+          "!posts.delete",
+          "comments.*.own"
+         ],
+         "inherits": [
+          "viewer"
+         ]
+        },
+        "admin": {
+         "permissions": [
+          "*"
+         ],
+         "inherits": [
+          "editor"
+         ]
+        },
+        "auditor": {
+         "permissions": [
+          "*.read",
+          "!billing.read"
+         ]
+        }
+       }
+      },
+      [],
+      "comments.users"
+     ],
+     "expect": {
+      "result": false
+     }
+    }
+   ]
+  }
+ ]
+}

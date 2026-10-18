@@ -2,128 +2,128 @@
 
 This document is the normative cross-language contract. Every language port MUST produce byte-identical output for all specified inputs. Deviations from this specification are bugs.
 
-Key words MUST, MUST NOT, SHOULD and MAY are interpreted as in RFC 2119 and RFC 8174.
+The key words MUST, MUST NOT, SHOULD and MAY are to be interpreted as in RFC 2119 and RFC 8174.
 
-| Atribut | Nilai |
+| Attribute | Value |
 |---|---|
-| Versi kontrak | 0.1.0 |
-| Tanggal tinjauan standar acuan | 2026-10-07 |
-| Vector | `vectors/lombokauth-vectors-v1.json` |
-| SHA-256 vector | `9edfc13e90a369e116c04e6ccff5df53e43132e2df94a6d45cacf772b2513488` |
+| Contract version | 0.1.0 |
+| Review date of reference standards | 2026-10-07 |
+| Vectors | `vectors/lombokauth-vectors-v1.json` |
+| Vector SHA-256 | `9edfc13e90a369e116c04e6ccff5df53e43132e2df94a6d45cacf772b2513488` |
 
-## 0. Standar acuan (U2)
+## 0. Reference standards (U2)
 
-| Acuan | Versi | Pemakaian |
+| Reference | Version | Use |
 |---|---|---|
-| RFC 7519, RFC 7515 | 2015 | JWT dan serialisasi compact JWS |
-| RFC 7518 | 2015 | HS256 dan panjang kunci minimum (bagian 3.2) |
-| RFC 8725 | 2020 | Praktik terbaik JWT: allow-list algoritma, penolakan `none` |
+| RFC 7519, RFC 7515 | 2015 | JWT and compact JWS serialization |
+| RFC 7518 | 2015 | HS256 and the minimum key length (section 3.2) |
+| RFC 8725 | 2020 | JWT best practices: algorithm allow-list, rejection of `none` |
 | RFC 8018 | 2017 | PBKDF2 |
-| PHC string format | 2017 | Format hash kata sandi |
-| RFC 4226, RFC 6238 | 2005, 2011 | HOTP dan TOTP, termasuk vector uji lampiran |
+| PHC string format | 2017 | Password hash format |
+| RFC 4226, RFC 6238 | 2005, 2011 | HOTP and TOTP, including the appendix test vectors |
 | RFC 4648 | 2006 | base32, base64, base64url |
-| Key Uri Format (Google Authenticator) | 2023 | URI `otpauth://totp/` |
-| RFC 3986 | 2005 | Karakter unreserved dan percent-encoding |
-| ECMA-262 | 2024 | Serialisasi JSON klaim (`JSON.stringify`) |
-| RFC 2119, RFC 8174 | 1997, 2017 | Kata kunci normatif |
+| Key Uri Format (Google Authenticator) | 2023 | The `otpauth://totp/` URI |
+| RFC 3986 | 2005 | Unreserved characters and percent-encoding |
+| ECMA-262 | 2024 | JSON serialization of claims (`JSON.stringify`) |
+| RFC 2119, RFC 8174 | 1997, 2017 | Normative key words |
 
-## 1. Vector
+## 1. Vectors
 
-Berkas vector memuat `{ format, specVersion, note, groups }`. Setiap kasus memuat `name`, `fn`, `args`, `expect` (`{ "result": ... }` atau `{ "error": code }`). Dalam `args`, objek `{ "hex": "..." }` berarti byte; string berarti byte UTF-8-nya, kecuali argumen salt yang berupa string heksadesimal. Setiap port yang diklaim MUST menjalankan seluruh kasus lewat titik masuk `call(fn, args)`. Hash SHA-256 berkas MUST sama dengan tabel atribut.
+The vector file contains `{ format, specVersion, note, groups }`. Each case contains `name`, `fn`, `args` and `expect` (`{ "result": ... }` or `{ "error": code }`). In `args`, an object `{ "hex": "..." }` means bytes; a string means its UTF-8 bytes, except for a salt argument that is a hexadecimal string. Every claimed port MUST run all cases through the entry point `call(fn, args)`. The SHA-256 hash of the file MUST equal the one in the attribute table.
 
 ## 2. JWT HS256
 
-Secret MUST paling sedikit 32 byte (`invalid_secret`).
+The secret MUST be at least 32 bytes (`invalid_secret`).
 
-`signJwt(claims, secret, options?)`: urutan validasi secret, opsi (`kid`, string tidak kosong; `invalid_option`), klaim (objek JSON dengan angka berhingga; `invalid_claim`). Header adalah `{"alg":"HS256","typ":"JWT"}` ditambah `"kid"` bila ada, dalam urutan itu. Token = `B64U(JSON(header)) + "." + B64U(JSON(claims)) + "." + B64U(HMAC-SHA256(secret, dua bagian pertama))`, dengan `JSON` setara `JSON.stringify` ECMA-262 dan `B64U` base64url tanpa padding.
+`signJwt(claims, secret, options?)`: validation order is the secret, the options (`kid`, a non-empty string; `invalid_option`), then the claims (a JSON object with finite numbers; `invalid_claim`). The header is `{"alg":"HS256","typ":"JWT"}` plus `"kid"` if present, in that order. Token = `B64U(JSON(header)) + "." + B64U(JSON(claims)) + "." + B64U(HMAC-SHA256(secret, the first two parts))`, where `JSON` is equivalent to ECMA-262 `JSON.stringify` and `B64U` is base64url without padding.
 
-`verifyJwt(token, secret, options)`: opsi MUST objek dengan `now` (detik, angka berhingga) dan opsional `leeway` (angka >= 0, bawaan 0), `issuer`, `audience` (string), `requireExp` (boolean, bawaan true); kunci lain atau tipe salah MUST `invalid_option`. Urutan pemeriksaan, galat pertama dilaporkan:
+`verifyJwt(token, secret, options)`: the options MUST be an object with `now` (seconds, a finite number) and optionally `leeway` (a number >= 0, default 0), `issuer`, `audience` (strings), `requireExp` (boolean, default true); other keys or wrong types MUST produce `invalid_option`. Order of checks; the first error is reported:
 
-1. secret; opsi.
-2. Token MUST string dengan tepat tiga segmen dipisah `.` (`invalid_token`).
-3. Header dan payload: base64url kanonik (tanpa padding, tanpa bit sisa bukan nol), UTF-8 sah, JSON RFC 8259, objek, angka berhingga, kedalaman paling besar 512 (`invalid_token`). Kunci duplikat memakai nilai terakhir.
-4. Segmen tanda tangan base64url kanonik (`invalid_token`).
-5. `alg` MUST tepat `HS256` (`unsupported_alg`); header hanya boleh memuat `alg`, `typ`, `kid` (selain itu, termasuk `crit`, `invalid_token`); `typ` bila ada MUST `JWT`; `kid` bila ada MUST string.
-6. Tanda tangan dibandingkan waktu-konstan (`invalid_signature`).
-7. Tipe klaim: `exp`, `nbf`, `iat` angka; `iss`, `sub` string; `aud` string atau array string (`invalid_claim`).
-8. `exp`: tidak ada dan `requireExp` true: `invalid_claim`; ada dan `now >= exp + leeway`: `token_expired`.
+1. The secret; the options.
+2. The token MUST be a string with exactly three segments separated by `.` (`invalid_token`).
+3. Header and payload: canonical base64url (no padding, no non-zero trailing bits), valid UTF-8, RFC 8259 JSON, an object, finite numbers, a depth of at most 512 (`invalid_token`). Duplicate keys use the last value.
+4. The signature segment is canonical base64url (`invalid_token`).
+5. `alg` MUST be exactly `HS256` (`unsupported_alg`); the header may only contain `alg`, `typ`, `kid` (otherwise, including `crit`, `invalid_token`); `typ`, if present, MUST be `JWT`; `kid`, if present, MUST be a string.
+6. The signature is compared in constant time (`invalid_signature`).
+7. Claim types: `exp`, `nbf`, `iat` numbers; `iss`, `sub` strings; `aud` a string or an array of strings (`invalid_claim`).
+8. `exp`: absent and `requireExp` true: `invalid_claim`; present and `now >= exp + leeway`: `token_expired`.
 9. `nbf`: `now + leeway < nbf`: `token_not_yet_valid`.
-10. `issuer` diberikan dan `iss` tidak sama persis: `invalid_issuer`.
-11. `audience` diberikan dan tidak sama dengan `aud` (string) atau tidak termasuk `aud` (array): `invalid_audience`.
+10. `issuer` is given and `iss` is not exactly equal: `invalid_issuer`.
+11. `audience` is given and is not equal to `aud` (a string) or is not among `aud` (an array): `invalid_audience`.
 
-Hasil `{ header, claims }`. `decodeJwtUnverified(token)` menjalankan langkah 2 dan 3 saja.
+The result is `{ header, claims }`. `decodeJwtUnverified(token)` runs steps 2 and 3 only.
 
-## 3. Hash kata sandi
+## 3. Password hashes
 
-Format: `$pbkdf2-sha256$i=<n>$<salt>$<hash>`, `n` desimal tanpa nol di depan, `salt` dan `hash` base64 standar tanpa padding, `hash` = PBKDF2-HMAC-SHA256(UTF-8(password), salt, n, 32).
+Format: `$pbkdf2-sha256$i=<n>$<salt>$<hash>`, `n` decimal without leading zeros, `salt` and `hash` standard base64 without padding, `hash` = PBKDF2-HMAC-SHA256(UTF-8(password), salt, n, 32).
 
-`hashPassword(password, salt, iterations?)`: password MUST string (`invalid_input`); salt byte atau string heksadesimal, paling sedikit 16 byte (`invalid_salt`); iterations bilangan bulat 1000..10000000, bawaan 600000 (`invalid_option`).
+`hashPassword(password, salt, iterations?)`: the password MUST be a string (`invalid_input`); the salt is bytes or a hexadecimal string of at least 16 bytes (`invalid_salt`); iterations is an integer in 1000..10000000, default 600000 (`invalid_option`).
 
-`verifyPassword(password, phc)`: PHC MUST cocok format di atas dengan `n` 1000..10000000, salt paling sedikit 16 byte, hash tepat 32 byte, dan base64 kanonik (`invalid_hash`); lalu password MUST string. Perbandingan waktu-konstan.
+`verifyPassword(password, phc)`: the PHC MUST match the format above with `n` in 1000..10000000, a salt of at least 16 bytes, a hash of exactly 32 bytes, and canonical base64 (`invalid_hash`); then the password MUST be a string. The comparison is constant-time.
 
-`needsRehash(phc, iterations?)`: iterations divalidasi lebih dulu (bawaan 600000), lalu PHC; true bila `n < iterations`.
+`needsRehash(phc, iterations?)`: iterations is validated first (default 600000), then the PHC; true when `n < iterations`.
 
 ## 4. HOTP, TOTP, base32
 
-Secret OTP MUST paling sedikit 10 byte (`invalid_secret`). Opsi: `digits` 6..8 (bawaan 6), `algorithm` `SHA1` atau `SHA256` (bawaan `SHA1`); kunci lain `invalid_option`.
+An OTP secret MUST be at least 10 bytes (`invalid_secret`). Options: `digits` 6..8 (default 6), `algorithm` `SHA1` or `SHA256` (default `SHA1`); other keys `invalid_option`.
 
-`hotp(secret, counter, options?)`: counter bilangan bulat 0..2^53-1. Nilai = truncation dinamis RFC 4226 atas HMAC(secret, counter 8 byte big-endian) modulo 10^digits, diisi nol di depan.
+`hotp(secret, counter, options?)`: the counter is an integer in 0..2^53-1. The value is the RFC 4226 dynamic truncation of HMAC(secret, the 8-byte big-endian counter) modulo 10^digits, left-padded with zeros.
 
-`totp(secret, time, options?)`: opsi tambahan `period` 1..86400 (bawaan 30) dan `t0` (bawaan 0); `time` bilangan bulat detik >= `t0`. Langkah = `floor((time - t0) / period)`; nilai = HOTP langkah itu. Urutan validasi: secret, digits, algorithm, period, t0, time.
+`totp(secret, time, options?)`: additional options `period` 1..86400 (default 30) and `t0` (default 0); `time` is an integer number of seconds >= `t0`. Step = `floor((time - t0) / period)`; the value is the HOTP of that step. Validation order: secret, digits, algorithm, period, t0, time.
 
-`verifyTotp(secret, code, time, options?)`: opsi tambahan `window` 0..10 (bawaan 1). Bila `code` bukan string digit sepanjang `digits`, hasil null. Selain itu diperiksa langkah `s + d` untuk `d` dari `-window` sampai `window` berurutan, melewati langkah negatif; hasil adalah `d` pertama yang cocok (perbandingan waktu-konstan) atau null.
+`verifyTotp(secret, code, time, options?)`: additional option `window` 0..10 (default 1). If `code` is not a digit string of length `digits`, the result is null. Otherwise steps `s + d` are checked for `d` from `-window` to `window` in order, skipping negative steps; the result is the first matching `d` (constant-time comparison) or null.
 
-`base32Encode(data)`: RFC 4648 dengan padding. `base32Decode(text)`: huruf kecil ASCII dilipat; padding opsional tetapi bila ada panjang total MUST kelipatan 8; panjang tanpa padding modulo 8 MUST bukan 1, 3, atau 6; karakter di luar alfabet dan bit sisa bukan nol MUST `invalid_input`. Hasil di `call` adalah `{ "hex": ... }`.
+`base32Encode(data)`: RFC 4648 with padding. `base32Decode(text)`: ASCII lowercase is folded; padding is optional but when present the total length MUST be a multiple of 8; the unpadded length modulo 8 MUST NOT be 1, 3 or 6; characters outside the alphabet and non-zero trailing bits MUST produce `invalid_input`. The result in `call` is `{ "hex": ... }`.
 
-`otpauthUri(secret, account, issuer, options?)`: `account` dan `issuer` string tidak kosong tanpa `:` (`invalid_input`). Keluaran `otpauth://totp/` + pct(issuer) + `:` + pct(account) + `?secret=` + base32 tanpa padding + `&issuer=` + pct(issuer) + `&algorithm=` + algoritma + `&digits=` + digits + `&period=` + period. `pct` meng-encode setiap byte UTF-8 selain `A-Z a-z 0-9 - . _ ~` sebagai `%XX` heksadesimal huruf besar.
+`otpauthUri(secret, account, issuer, options?)`: `account` and `issuer` are non-empty strings without `:` (`invalid_input`). Output `otpauth://totp/` + pct(issuer) + `:` + pct(account) + `?secret=` + base32 without padding + `&issuer=` + pct(issuer) + `&algorithm=` + algorithm + `&digits=` + digits + `&period=` + period. `pct` encodes every UTF-8 byte other than `A-Z a-z 0-9 - . _ ~` as `%XX` in uppercase hexadecimal.
 
 ## 5. RBAC
 
-Kebijakan: `{ "roles": { nama: { "permissions": [...], "inherits": [...] } } }`. Nama peran MUST cocok `^[A-Za-z0-9_.-]{1,64}$`. Kunci lain di tingkat mana pun, bentuk bukan objek atau array, nama atau pewarisan tidak sah: `invalid_policy`. `permissions` atau `inherits` bernilai null berarti array kosong.
+Policy: `{ "roles": { name: { "permissions": [...], "inherits": [...] } } }`. A role name MUST match `^[A-Za-z0-9_.-]{1,64}$`. Other keys at any level, a shape that is not an object or array, an invalid name or an invalid inheritance: `invalid_policy`. A `permissions` or `inherits` value of null means an empty array.
 
-Izin adalah segmen dipisah `.`, setiap segmen `[A-Za-z0-9_-]+`. Pola di kebijakan boleh memakai segmen `*` dan awalan `!` (tolak). Bentuk tidak sah: `invalid_permission`. Pewarisan ke peran yang tidak ada, siklus, atau rantai pewarisan lebih panjang dari 64 peran: `invalid_policy`. Implementasi MUST tidak kehabisan stack pada rantai sepanjang apa pun.
+A permission is segments separated by `.`, each segment `[A-Za-z0-9_-]+`. A pattern in the policy may use a segment `*` and the prefix `!` (deny). An invalid form: `invalid_permission`. Inheriting from a role that does not exist, a cycle, or an inheritance chain longer than 64 roles: `invalid_policy`. An implementation MUST NOT exhaust its stack on a chain of any length.
 
-Pencocokan pola `p` terhadap izin `x`: segmen dibandingkan berurutan; `*` di posisi terakhir cocok dengan satu atau lebih segmen sisa; `*` di posisi lain cocok dengan tepat satu segmen; segmen lain MUST sama persis (peka huruf); tanpa `*` terakhir, jumlah segmen MUST sama.
+Matching a pattern `p` against a permission `x`: segments are compared in order; a `*` in the last position matches one or more remaining segments; a `*` in any other position matches exactly one segment; other segments MUST be exactly equal (case-sensitive); without a trailing `*`, the number of segments MUST be equal.
 
-`can(policy, roles, permission)`: kebijakan divalidasi, lalu `roles` (array nama peran yang ada; selain itu `invalid_role`), lalu `permission` (izin tanpa wildcard; `invalid_permission`). Pola dikumpulkan dari peran dan seluruh pewarisannya. Hasil false bila ada pola tolak yang cocok; selain itu true bila ada pola izin yang cocok; selain itu false.
+`can(policy, roles, permission)`: the policy is validated, then `roles` (an array of existing role names; otherwise `invalid_role`), then `permission` (a permission without wildcards; `invalid_permission`). Patterns are collected from the roles and all their inheritance. The result is false if a deny pattern matches; otherwise true if an allow pattern matches; otherwise false.
 
-`effectivePermissions(policy, roles)`: `{ allow, deny }`, masing-masing pola unik terurut menurut urutan code unit.
+`effectivePermissions(policy, roles)`: `{ allow, deny }`, each a list of unique patterns sorted by code unit order.
 
-## 6. Keamanan
+## 6. Security
 
-- `alg` selain HS256 MUST ditolak, termasuk `none` dan varian huruf; tanda tangan MUST diperiksa sebelum klaim dipercaya.
-- Semua perbandingan rahasia (tanda tangan, hash, kode OTP) MUST waktu-konstan.
-- PHC dengan iterasi di luar 1000..10000000 MUST ditolak untuk mencegah penurunan kekuatan dan serangan penolakan layanan.
-- Aturan tolak MUST selalu menang atas aturan izin, termasuk lewat pewarisan.
-- Masukan apa pun MUST menghasilkan hasil atau galat dengan `code` pada bagian 7; panic atau pengecualian lain adalah bug.
+- An `alg` other than HS256 MUST be rejected, including `none` and case variants; the signature MUST be checked before claims are trusted.
+- All secret comparisons (signature, hash, OTP code) MUST be constant-time.
+- A PHC with iterations outside 1000..10000000 MUST be rejected to prevent strength downgrade and denial-of-service attacks.
+- A deny rule MUST always win over an allow rule, including through inheritance.
+- Any input MUST produce a result or an error with a `code` from section 7; a panic or any other exception is a bug.
 
-## 7. Galat
+## 7. Errors
 
-| `code` | Kondisi | `messageId` |
+| `code` | Condition | `messageId` |
 |---|---|---|
-| `invalid_secret` | secret JWT kurang dari 32 byte atau secret OTP kurang dari 10 byte | `lombokauth.error.invalid_secret` |
-| `invalid_token` | struktur, encoding, atau header token tidak sah | `lombokauth.error.invalid_token` |
-| `invalid_signature` | tanda tangan tidak cocok | `lombokauth.error.invalid_signature` |
-| `unsupported_alg` | `alg` bukan HS256 | `lombokauth.error.unsupported_alg` |
-| `token_expired` | `exp` terlewati | `lombokauth.error.token_expired` |
-| `token_not_yet_valid` | `nbf` belum tercapai | `lombokauth.error.token_not_yet_valid` |
-| `invalid_issuer` | `iss` tidak cocok | `lombokauth.error.invalid_issuer` |
-| `invalid_audience` | `aud` tidak cocok | `lombokauth.error.invalid_audience` |
-| `invalid_claim` | klaim bertipe salah, klaim tidak sah saat menandatangani, atau `exp` wajib tidak ada | `lombokauth.error.invalid_claim` |
-| `invalid_salt` | salt kurang dari 16 byte atau bukan heksadesimal | `lombokauth.error.invalid_salt` |
-| `invalid_hash` | string PHC tidak sah | `lombokauth.error.invalid_hash` |
-| `invalid_option` | opsi tidak sah; fungsi tak dikenal | `lombokauth.error.invalid_option` |
-| `invalid_input` | argumen bertipe atau ber-encoding salah | `lombokauth.error.invalid_input` |
-| `invalid_policy` | kebijakan tidak sah | `lombokauth.error.invalid_policy` |
-| `invalid_role` | peran tidak dikenal | `lombokauth.error.invalid_role` |
-| `invalid_permission` | nama izin atau pola tidak sah | `lombokauth.error.invalid_permission` |
+| `invalid_secret` | a JWT secret shorter than 32 bytes or an OTP secret shorter than 10 bytes | `lombokauth.error.invalid_secret` |
+| `invalid_token` | invalid token structure, encoding or header | `lombokauth.error.invalid_token` |
+| `invalid_signature` | the signature does not match | `lombokauth.error.invalid_signature` |
+| `unsupported_alg` | `alg` is not HS256 | `lombokauth.error.unsupported_alg` |
+| `token_expired` | `exp` has passed | `lombokauth.error.token_expired` |
+| `token_not_yet_valid` | `nbf` has not been reached | `lombokauth.error.token_not_yet_valid` |
+| `invalid_issuer` | `iss` does not match | `lombokauth.error.invalid_issuer` |
+| `invalid_audience` | `aud` does not match | `lombokauth.error.invalid_audience` |
+| `invalid_claim` | a claim of the wrong type, an invalid claim when signing, or a required `exp` is missing | `lombokauth.error.invalid_claim` |
+| `invalid_salt` | the salt is shorter than 16 bytes or not hexadecimal | `lombokauth.error.invalid_salt` |
+| `invalid_hash` | invalid PHC string | `lombokauth.error.invalid_hash` |
+| `invalid_option` | invalid option; unknown function | `lombokauth.error.invalid_option` |
+| `invalid_input` | an argument of the wrong type or encoding | `lombokauth.error.invalid_input` |
+| `invalid_policy` | invalid policy | `lombokauth.error.invalid_policy` |
+| `invalid_role` | unknown role | `lombokauth.error.invalid_role` |
+| `invalid_permission` | invalid permission name or pattern | `lombokauth.error.invalid_permission` |
 
 ## 8. Non-goals (0.1.0)
 
-Algoritma JWT asimetris, JWE, JWKS, refresh token dan pencabutan, Argon2id dan bcrypt, WebAuthn, penyimpanan sesi, dan ABAC (atribut).
+Asymmetric JWT algorithms, JWE, JWKS, refresh tokens and revocation, Argon2id and bcrypt, WebAuthn, session storage, and ABAC (attributes).
 
-## 9. Riwayat perubahan kontrak
+## 9. Contract change history
 
-| Versi | Perubahan |
+| Version | Change |
 |---|---|
-| 0.1.0 | Kontrak awal |
+| 0.1.0 | Initial contract |

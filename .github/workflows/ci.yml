@@ -1,5 +1,5 @@
-# Mandiri sementara (TD-02/TD-P0-08): ganti dengan pemanggil lombok-ci.yml dari codinglombok/.github
-# dan pin setiap action ke SHA sebelum rilis pertama.
+# Self-contained for now (TD-P0-08): replace with a caller of lombok-ci.yml from codinglombok/.github,
+# and pin every action to a SHA before the first release (see LombokSQL for the pinned pattern).
 name: ci
 on:
   push:

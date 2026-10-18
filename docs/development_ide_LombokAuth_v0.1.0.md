@@ -2,29 +2,30 @@
 
 ## 1. Roadmap
 
-| Versi | Isi |
+| Version | Content |
 |---|---|
-| 0.1.1 | Tutup syarat rilis: CI dijalankan, `doctor docs/privacy/style`, coverage diukur, target `cargo-fuzz` |
-| 0.2.0 | EdDSA (Ed25519) untuk JWT; Argon2id; daftar pencabutan berbasis `jti`; port Python, Go, PHP |
-| 0.3.0 | JWKS dan rotasi kunci (`kid`); ABAC sederhana; integrasi opsional LombokSQL dan LombokCache |
+| 0.1.1 | Close the release conditions: CI run, `doctor docs/privacy/style`, coverage measured, a `cargo-fuzz` target |
+| 0.2.0 | EdDSA (Ed25519) for JWT; Argon2id; a revocation list based on `jti`; Python, Go and PHP ports |
+| 0.3.0 | JWKS and key rotation (`kid`); simple ABAC; optional LombokSQL and LombokCache integration |
 
 ## 2. Deferred scope
 
-Lihat SPEC bagian Non-goals dan README (Batasan).
+See the Non-goals section of the SPEC and the README (Known limitations).
 
-## 3. Prinsip desain kontributor
+## 3. Design principles for contributors
 
-- Kontrak dulu, test dulu; semua port lulus vector yang sama.
-- Tidak ada dependensi runtime; dev-dependency dicatat.
-- Fungsi inti murni: jam, keacakan, dan I/O dipasok pemanggil.
-- Bawaan yang aman: `exp` wajib, iterasi tinggi, hanya algoritma yang diizinkan.
-- Setiap aturan penolakan memiliki vector golden.
+- Contract first, tests first; all ports pass the same vectors.
+- No runtime dependencies; dev dependencies are recorded.
+- Core functions are pure: the clock, randomness and I/O are supplied by the caller.
+- Secure defaults: `exp` is required, high iteration counts, only allowed algorithms.
+- Every rejection rule has a golden vector.
+- English is the default language for all documents, code comments and messages.
 
-## 4. Cara berkontribusi
+## 4. How to contribute
 
-Lihat `CONTRIBUTING.md`.
+See `CONTRIBUTING.md`.
 
-## 5. Pertanyaan terbuka
+## 5. Open questions
 
-- Apakah `iat` di masa depan (melebihi leeway) sebaiknya ditolak?
-- Apakah izin sebaiknya tidak peka huruf besar-kecil?
+- Should an `iat` in the future (beyond the leeway) be rejected?
+- Should permissions be case-insensitive?

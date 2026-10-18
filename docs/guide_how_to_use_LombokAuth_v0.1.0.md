@@ -1,16 +1,16 @@
 # Guide How To Use LombokAuth v0.1.0
 
-## Instalasi
+## Installation
 
-Belum terbit. Setelah rilis: `npm install lombokauth` atau `cargo add lombokauth`. Sebelum itu, bangun dari repo (lihat `CONTRIBUTING.md`).
+Not published yet. After the release: `npm install lombokauth` or `cargo add lombokauth`. Until then, build from the repository (see `CONTRIBUTING.md`).
 
-## Konsep dasar
+## Basic concepts
 
-1. **Waktu** selalu dipasok sebagai detik (`now`); library tidak membaca jam.
-2. **Secret** JWT paling sedikit 32 byte acak; secret OTP paling sedikit 10 byte (disarankan 20).
-3. **Galat** verifikasi membawa kode yang dapat dicatat (`token_expired`, `invalid_signature`); jangan tampilkan kode itu ke pengguna akhir.
+1. **Time** is always supplied as seconds (`now`); the library never reads the clock.
+2. A JWT **secret** is at least 32 random bytes; an OTP secret is at least 10 bytes (20 recommended).
+3. Verification **errors** carry a code that can be logged (`token_expired`, `invalid_signature`); do not show that code to end users.
 
-## Contoh
+## Example
 
 ```ts
 import { signJwt, verifyJwt, LombokAuthError } from "lombokauth";
@@ -26,25 +26,25 @@ try {
 
 ## Recipes
 
-### Mengaktifkan TOTP
+### Enabling TOTP
 
 ```ts
 import { otpauthUri, verifyTotp } from "lombokauth";
-const uri = otpauthUri(secretBytes, "ana@example.com", "Example");   // tampilkan sebagai kode QR
+const uri = otpauthUri(secretBytes, "ana@example.com", "Example");   // show it as a QR code
 const offset = verifyTotp(secretBytes, input, Math.floor(Date.now() / 1000));
 if (offset === null) reject();
 ```
 
-Untuk secret `12345678901234567890`, URI-nya adalah `otpauth://totp/Example:ana%40example.com?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&issuer=Example&algorithm=SHA1&digits=6&period=30`. Simpan langkah terakhir yang dipakai (langkah saat ini ditambah offset) dan tolak kode dengan langkah yang sama atau lebih lama untuk mencegah replay.
+For the secret `12345678901234567890`, the URI is `otpauth://totp/Example:ana%40example.com?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&issuer=Example&algorithm=SHA1&digits=6&period=30`. Store the last step that was used (the current step plus the offset) and reject codes with the same or an older step to prevent replay.
 
-### Memperbarui hash lama saat login
+### Upgrading an old hash at login
 
 ```ts
 import { verifyPassword, needsRehash, hashPasswordRandom } from "lombokauth";
 if (verifyPassword(input, user.hash) && needsRehash(user.hash)) user.hash = hashPasswordRandom(input);
 ```
 
-### RBAC sebagai data
+### RBAC as data
 
 ```ts
 import { can, effectivePermissions } from "lombokauth";
@@ -56,13 +56,13 @@ effectivePermissions(policy, ["editor"]);
 
 ## Common pitfalls
 
-- `decodeJwtUnverified` tidak memeriksa apa pun; jangan dipakai untuk keputusan akses.
-- `exp` wajib secara bawaan; token tanpa `exp` ditolak kecuali `requireExp: false`.
-- `now` dalam detik, bukan milidetik.
-- `posts.*` tidak cocok dengan `posts` sendiri; tambahkan keduanya bila perlu.
-- Aturan `!tolak` dari peran mana pun (termasuk peran warisan) selalu menang.
-- 600000 iterasi PBKDF2 memakan waktu nyata di TypeScript murni; ukur di perangkat target dan sesuaikan.
+- `decodeJwtUnverified` checks nothing; do not use it for access decisions.
+- `exp` is required by default; a token without `exp` is rejected unless `requireExp: false`.
+- `now` is in seconds, not milliseconds.
+- `posts.*` does not match `posts` itself; add both when you need that.
+- A `!deny` rule from any role (including an inherited role) always wins.
+- 600000 PBKDF2 iterations take real time in pure TypeScript; measure on the target device and adjust.
 
-## Lihat juga
+## See also
 
 README, SPEC_, API_.

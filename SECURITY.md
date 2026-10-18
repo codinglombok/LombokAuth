@@ -1,25 +1,25 @@
-# Kebijakan Keamanan
+# Security Policy
 
-## Versi yang didukung
+## Supported versions
 
-| Versi | Dukungan |
+| Version | Support |
 |---|---|
-| 0.1.x | Perbaikan keamanan |
+| 0.1.x | Security fixes |
 
-## Melaporkan kerentanan
+## Reporting a vulnerability
 
-Gunakan **GitHub Private Vulnerability Reporting** pada repo ini (tab Security, "Report a vulnerability"). Jangan membuka issue publik untuk kerentanan.
+Use **GitHub Private Vulnerability Reporting** on this repository (Security tab, "Report a vulnerability"). Do not open a public issue for a vulnerability.
 
-- Respons awal: paling lama 48 jam.
-- Perbaikan untuk temuan kritis: target 7 hari.
-- Pengungkapan dikoordinasikan dengan pelapor.
+- Initial response: within 48 hours.
+- Fix for critical findings: 7 days (target).
+- Disclosure is coordinated with the reporter.
 
-## Cakupan
+## Scope
 
-Dalam cakupan: seluruh fungsi yang diekspor, khususnya penerimaan JWT yang tidak sah (algoritma `none`, tanda tangan salah, klaim kedaluwarsa), kebocoran waktu pada verifikasi, kesalahan RBAC yang memberi izin berlebih, dan panic atau waktu eksekusi tak terbatas.
+In scope: every exported function, in particular the acceptance of an invalid JWT (algorithm `none`, a wrong signature, expired claims), timing leaks in verification, RBAC mistakes that grant excessive permissions, and panics or unbounded execution time.
 
-Di luar cakupan: penyimpanan pengguna, sesi, dan sumber keacakan yang dipasok aplikasi; algoritma JWT selain HS256.
+Out of scope: user, session and randomness storage supplied by the application; JWT algorithms other than HS256.
 
-## Model ancaman ringkas
+## Short threat model
 
-Lihat bagian Keamanan pada `docs/SPEC_LombokAuth_v0.1.0.md`.
+See section 6 of `docs/SPEC_LombokAuth_v0.1.0.md`.

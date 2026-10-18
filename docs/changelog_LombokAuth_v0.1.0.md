@@ -1,15 +1,15 @@
-# Changelog LombokAuth (ringkasan)
+# Changelog LombokAuth (summary)
 
-Entri terbaru di depan. Rincian ada di `CHANGELOG.md`.
+The newest entry comes first. Details are in `CHANGELOG.md`.
 
 ## 0.1.0 - 2026-10-07
 
 ### Added
-- JWT HS256, hash PBKDF2 PHC, HOTP/TOTP, RBAC.
-- Port Rust `no_std + alloc` dan port TypeScript.
-- Vector 381 kasus; runner di kedua port; fuzz, uji mutasi.
+- JWT HS256, PBKDF2 PHC password hashes, HOTP/TOTP, RBAC.
+- Rust `no_std + alloc` port and TypeScript port.
+- 381 vectors; runners in both ports; fuzzing and mutation testing.
 
 ### Security
-- Hanya HS256; `none` dan algoritma lain ditolak; tanda tangan diperiksa sebelum klaim.
-- Perbandingan rahasia waktu-konstan; batas iterasi PBKDF2 1000..10000000.
-- Aturan tolak selalu menang; rantai pewarisan dibatasi tanpa risiko stack overflow.
+- HS256 only; `none` and other algorithms are rejected; the signature is checked before claims.
+- Constant-time secret comparison; PBKDF2 iteration limit of 1000..10000000.
+- Deny rules always win; the inheritance chain is bounded without risk of stack overflow.

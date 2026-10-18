@@ -2,37 +2,37 @@
 
 [![License](https://img.shields.io/badge/license-Apache--2.0%20OR%20MIT-blue)](LICENSE-APACHE)
 
-Inti autentikasi tanpa dependensi: **JWT HS256** dengan verifikasi klaim yang ketat, **hash kata sandi PBKDF2-SHA256** dalam format PHC, **HOTP/TOTP** untuk aplikasi authenticator, dan **RBAC** dengan wildcard, pewarisan peran, dan aturan tolak. Fungsi murni: salt, secret, dan waktu dipasok pemanggil. Hasilnya identik di setiap port.
+A dependency-free authentication core: **JWT HS256** with strict claim verification, **PBKDF2-SHA256 password hashes** in PHC format, **HOTP/TOTP** for authenticator apps, and **RBAC** with wildcards, role inheritance and deny rules. Pure functions: salt, secret and time are supplied by the caller. The output is identical in every port.
 
 Part of the [Lombok Ecosystem](https://github.com/codinglombok).
 
-## Mengapa library ini?
+## Why this library?
 
-Kesalahan autentikasi yang paling sering bukan pada kriptografinya, tetapi pada aturan di sekitarnya: menerima `alg: none`, lupa memeriksa `exp`, membandingkan tanda tangan dengan `==`, atau menyimpan hash kata sandi dengan iterasi yang terlalu kecil. Setiap bahasa memiliki pustaka dengan bawaan yang berbeda. LombokAuth menetapkan aturan itu secara normatif, menolak bentuk yang meragukan secara eksplisit, dan membuktikannya dengan vector bersama, termasuk vector RFC 4226, RFC 6238, dan RFC 4648.
+The most common authentication mistakes are not in the cryptography but in the rules around it: accepting `alg: none`, forgetting to check `exp`, comparing signatures with `==`, or storing password hashes with too few iterations. Every language has libraries with different defaults. LombokAuth specifies those rules normatively, rejects doubtful forms explicitly, and proves them with shared vectors, including the vectors of RFC 4226, RFC 6238 and RFC 4648.
 
-Skenario pemakaian:
+Usage scenarios:
 
-- **Layanan web dan API**: token akses HS256 berumur pendek dengan pemeriksaan `iss`, `aud`, `exp`, `nbf`.
-- **Pendaftaran dan login**: hash PBKDF2 berformat PHC dan deteksi kapan hash perlu diperbarui.
-- **Autentikasi dua faktor**: TOTP kompatibel dengan aplikasi authenticator, termasuk URI `otpauth://` untuk kode QR.
-- **Otorisasi**: kebijakan RBAC sebagai data JSON yang dapat diperiksa dan dibagi antar layanan dalam bahasa berbeda.
-- **Serverless, edge, dan perangkat tertanam**: inti Rust `no_std + alloc` tanpa dependensi.
+- **Web services and APIs**: short-lived HS256 access tokens with checks on `iss`, `aud`, `exp` and `nbf`.
+- **Registration and login**: PBKDF2 hashes in PHC format and detection of when a hash needs to be upgraded.
+- **Two-factor authentication**: TOTP compatible with authenticator apps, including the `otpauth://` URI for QR codes.
+- **Authorization**: RBAC policy as JSON data that can be inspected and shared between services written in different languages.
+- **Serverless, edge and embedded devices**: a `no_std + alloc` Rust core without dependencies.
 
-Contoh dependen lain di ekosistem Lombok dicantumkan di `docs/map_LombokAuth_v0.1.0.md`.
+Other dependents in the Lombok Ecosystem are listed in `docs/map_LombokAuth_v0.1.0.md`.
 
-## Fitur
+## Features
 
-Setiap fitur di bawah ini dicakup vector di `vectors/` dan test TypeScript.
+Every feature below is covered by vectors in `vectors/` and by TypeScript tests.
 
-- `signJwt`, `verifyJwt`, `decodeJwtUnverified`: hanya HS256; `none` dan algoritma lain ditolak; `crit` ditolak; base64url kanonik; `exp` wajib secara bawaan; `leeway`, `issuer`, `audience`.
-- `hashPassword`, `verifyPassword`, `needsRehash`: PBKDF2-HMAC-SHA256, bawaan 600000 iterasi, salt paling sedikit 16 byte, format `$pbkdf2-sha256$i=...$salt$hash`.
-- `hotp`, `totp`, `verifyTotp`, `otpauthUri`, `base32Encode`, `base32Decode`: SHA1 dan SHA256, 6 sampai 8 digit, jendela verifikasi dengan offset langkah untuk deteksi replay.
-- `can`, `effectivePermissions`, `validatePolicy`: izin bertitik dengan `*`, aturan `!tolak` yang selalu menang, pewarisan dengan deteksi siklus dan batas rantai 64.
-- `hashPasswordRandom` (TypeScript) memakai `crypto.getRandomValues`.
+- `signJwt`, `verifyJwt`, `decodeJwtUnverified`: HS256 only; `none` and other algorithms are rejected; `crit` is rejected; canonical base64url; `exp` is required by default; `leeway`, `issuer`, `audience`.
+- `hashPassword`, `verifyPassword`, `needsRehash`: PBKDF2-HMAC-SHA256, 600000 iterations by default, a salt of at least 16 bytes, format `$pbkdf2-sha256$i=...$salt$hash`.
+- `hotp`, `totp`, `verifyTotp`, `otpauthUri`, `base32Encode`, `base32Decode`: SHA1 and SHA256, 6 to 8 digits, a verification window with a step offset for replay detection.
+- `can`, `effectivePermissions`, `validatePolicy`: dotted permissions with `*`, `!deny` rules that always win, inheritance with cycle detection and a chain limit of 64.
+- `hashPasswordRandom` (TypeScript) uses `crypto.getRandomValues`.
 
-## Instalasi
+## Installation
 
-Belum terbit di registry. Setelah rilis pertama:
+Not published to any registry yet. After the first release:
 
 ```bash
 npm install lombokauth      # TypeScript / JavaScript
@@ -46,7 +46,7 @@ cargo add lombokauth        # Rust
 ```ts
 import { signJwt, verifyJwt, hashPasswordRandom, verifyPassword, totp, can } from "lombokauth";
 
-const secret = process.env.JWT_SECRET!;                          // paling sedikit 32 byte
+const secret = process.env.JWT_SECRET!;                          // at least 32 bytes
 const now = Math.floor(Date.now() / 1000);
 const token = signJwt({ sub: "user-1", iss: "https://id.example.com", exp: now + 900 }, secret);
 const { claims } = verifyJwt(token, secret, { now, issuer: "https://id.example.com" });
@@ -74,37 +74,37 @@ assert!(verify_password("correct horse", &phc).unwrap());
 assert_eq!(totp(b"12345678901234567890", 59, &TotpOptions::default()).unwrap(), "287082");
 ```
 
-## Status port
+## Port status
 
-| Port | Status | Bukti |
+| Port | Status | Evidence |
 |---|---|---|
-| Rust (`no_std + alloc`) | YA, lulus vector | `rust/tests/vectors.rs` menjalankan seluruh vector; uji rantai pewarisan 200000 peran; build `thumbv7em-none-eabi` |
-| TypeScript | YA, lulus vector | `typescript/test/vectors.test.ts` menjalankan seluruh vector; kripto dibandingkan dengan `node:crypto`; fuzz token termutasi |
-| Python, Go, PHP, Java, Kotlin, C#, C/C++, Swift, Perl | BELUM | Tidak ada kode; direncanakan setelah kontrak stabil (lihat `docs/development_ide_LombokAuth_v0.1.0.md`) |
+| Rust (`no_std + alloc`) | YES, passes the vectors | `rust/tests/vectors.rs` runs every vector; a test of a 200000-role inheritance chain; `thumbv7em-none-eabi` build |
+| TypeScript | YES, passes the vectors | `typescript/test/vectors.test.ts` runs every vector; the cryptography is compared with `node:crypto`; fuzzing of mutated tokens |
+| Python, Go, PHP, Java, Kotlin, C#, C/C++, Swift, Perl | NOT YET | No code; planned once the contract is stable (see `docs/development_ide_LombokAuth_v0.1.0.md`) |
 
-Vector: 381 kasus (211 golden berekspektasi tulis tangan, dari RFC, atau dibangun dengan `node:crypto`; 170 regresi hasil pembangkit).
+Vectors: 381 cases (211 golden cases with hand-written expectations, taken from RFCs, or built with `node:crypto`; 170 generated regression cases).
 
-## Standar yang diimplementasikan
+## Standards implemented
 
-RFC 7519 (JWT), RFC 7515 (JWS compact), RFC 7518 bagian 3.2 (HS256, panjang kunci), RFC 8725 (praktik terbaik JWT: allow-list algoritma), RFC 8018 (PBKDF2), PHC string format, RFC 4226 (HOTP), RFC 6238 (TOTP), RFC 4648 (base32, base64url), Key Uri Format (`otpauth://`). Lihat `docs/SPEC_LombokAuth_v0.1.0.md`.
+RFC 7519 (JWT), RFC 7515 (compact JWS), RFC 7518 section 3.2 (HS256, key length), RFC 8725 (JWT best practices: algorithm allow-list), RFC 8018 (PBKDF2), the PHC string format, RFC 4226 (HOTP), RFC 6238 (TOTP), RFC 4648 (base32, base64url), the Key Uri Format (`otpauth://`). See `docs/SPEC_LombokAuth_v0.1.0.md`.
 
-## Batasan yang diketahui
+## Known limitations
 
-- JWT hanya HS256; tidak ada RS256, ES256, EdDSA, JWE, atau JWKS.
-- PBKDF2 dipilih karena dapat diimplementasikan tanpa dependensi di semua port; Argon2id lebih kuat terhadap serangan GPU dan direncanakan sebagai opsi.
-- Implementasi kripto belum diaudit pihak ketiga.
-- TOTP tidak menyimpan langkah yang sudah dipakai; pencegahan replay memakai offset yang dikembalikan `verifyTotp` dan penyimpanan milik aplikasi.
-- Port Rust tidak memiliki sumber keacakan; salt dipasok pemanggil.
-- Hanya Rust dan TypeScript yang memiliki kode. Fuzz bersifat pseudo-fuzz, belum `cargo-fuzz`.
+- JWT is HS256 only; there is no RS256, ES256, EdDSA, JWE or JWKS.
+- PBKDF2 was chosen because it can be implemented without dependencies in every port; Argon2id is stronger against GPU attacks and is planned as an option.
+- The cryptography implementation has not been audited by a third party.
+- TOTP does not store the steps that have been used; replay prevention uses the offset returned by `verifyTotp` together with storage owned by the application.
+- The Rust port has no source of randomness; the salt is supplied by the caller.
+- Only Rust and TypeScript have code. Fuzzing is pseudo-fuzzing, not `cargo-fuzz`.
 
-## Ekosistem Lombok
+## Lombok Ecosystem
 
-LombokAuth tidak bergantung pada library Lombok lain (L0). Library lain dapat memakainya secara opsional; daftar dependen ada di `docs/map_LombokAuth_v0.1.0.md`.
+LombokAuth has no required dependency on other Lombok libraries (L0). Other libraries may use it optionally; the dependents are listed in `docs/map_LombokAuth_v0.1.0.md`.
 
 ## Contributing
 
-Lihat [CONTRIBUTING.md](CONTRIBUTING.md). Untuk melaporkan kerentanan lihat [SECURITY.md](SECURITY.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md). To report a vulnerability, see [SECURITY.md](SECURITY.md).
 
-## Lisensi
+## License
 
-`Apache-2.0 OR MIT`. Lihat [LICENSE-APACHE](LICENSE-APACHE) dan [LICENSE-MIT](LICENSE-MIT).
+`Apache-2.0 OR MIT`. See [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT).

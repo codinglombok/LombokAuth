@@ -1,29 +1,29 @@
 # Map LombokAuth v0.1.0
 
-## 1. Posisi dependensi
+## 1. Dependency position
 
-L0. Posisi cluster dan nomor katalog mengikuti dokumen induk ekosistem v3.6 (tidak di-commit, ADR-024). Tidak memiliki dependensi Lombok wajib.
+L0. The cluster position and catalog number follow the ecosystem parent document v3.6 (not committed, ADR-024). No required Lombok dependencies.
 
-## 2. Contoh dependen di ekosistem
+## 2. Example dependents in the ecosystem
 
-Bagian ini satu-satunya tempat nama aplikasi atau framework boleh muncul (ADR-019). Ini ilustrasi, bukan kepemilikan; siapa pun dapat memakai LombokAuth.
+This section is the only place where application or framework names may appear (ADR-019). It is an illustration, not ownership; anyone can use LombokAuth.
 
-| Pemakai | Jenis | Status integrasi | Keterangan |
+| Dependent | Kind | Integration status | Notes |
 |---|---|---|---|
-| LombokClarion v3 | Framework | rencana (F7) | Menggantikan TokenIssuer dan melengkapi Gate di paket auth internal v2 |
-| LombokServer | Library L4 | rencana | Middleware autentikasi JWT |
-| LombokDocFlow | Aplikasi | rencana | Login, 2FA, dan peran pengguna |
+| LombokClarion v3 | Framework | planned (F7) | Replaces TokenIssuer and complements Gate in the internal v2 auth package |
+| LombokServer | L4 library | planned | JWT authentication middleware |
+| LombokDocFlow | Application | planned | Login, 2FA and user roles |
 
-Integrasi opsional ke LombokSecurity (kebijakan kata sandi), LombokSQL (penyimpanan), dan LombokCache (daftar token dicabut) belum diimplementasikan.
+Optional integration with LombokSecurity (password policy), LombokSQL (storage) and LombokCache (revoked-token list) is not implemented.
 
-## 3. Bergantung pada
+## 3. Depends on
 
-Tidak ada.
+Nothing.
 
-## 4. Jalur kontrak normatif
+## 4. Normative contract path
 
-`docs/SPEC_LombokAuth_v0.1.0.md` -> `vectors/lombokauth-vectors-v1.json` (sha256 di SPEC) -> runner `rust/tests/vectors.rs` dan `typescript/test/vectors.test.ts`.
+`docs/SPEC_LombokAuth_v0.1.0.md` -> `vectors/lombokauth-vectors-v1.json` (sha256 in SPEC) -> runners `rust/tests/vectors.rs` and `typescript/test/vectors.test.ts`.
 
-## 5. Peta folder
+## 5. Folder map
 
-Lihat `structure_repo_LombokAuth_v0.1.0.md`.
+See `structure_repo_LombokAuth_v0.1.0.md`.

@@ -61,6 +61,29 @@ test("doctor-lite: public markdown has no emoji and no forbidden ownership phras
   }
 });
 
+test("doctor-lite: English is the default language of every public document", () => {
+  // Unambiguous Indonesian function words; two or more on one line means the line is not English.
+  const stop = /\b(yang|dan|dengan|untuk|tidak|atau|dari|pada|adalah|sudah|belum|harus|dapat|akan|karena|semua)\b/gi;
+  const files = ["README.md", "CHANGELOG.md", "SECURITY.md", "CONTRIBUTING.md", "vectors/README.md", "docs/TECH_DEBT.md", ".github/workflows/ci.yml", ".gitignore", ".gitattributes"];
+  for (const d of DOCS) files.push(`docs/${d}_${LIB}_v${version}.md`);
+  for (const f of files) {
+    read(f).split("\n").forEach((line, i) => {
+      assert.ok((line.match(stop) ?? []).length < 2, `${f}:${i + 1} is not English: ${line.slice(0, 80)}`);
+    });
+  }
+  assert.ok(read(`docs/Lang_${LIB}_v${version}.md`).includes("English"));
+});
+
+test("doctor-lite: no backup files are tracked by git", () => {
+  let tracked: string;
+  try {
+    tracked = execFileSync("git", ["ls-files"], { cwd: root, encoding: "utf8" });
+  } catch {
+    return; // not a git checkout
+  }
+  assert.ok(!/\.(bak|orig|rej)$/m.test(tracked), "backup files are tracked");
+});
+
 test("doctor-lite: .gitignore carries the three ADR-024 lines", () => {
   const g = read(".gitignore");
   for (const line of ["/map", "/docs/*architecture*.*", "/docs/*masterplan*.*"]) assert.ok(g.split("\n").includes(line), line);

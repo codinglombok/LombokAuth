@@ -1,14 +1,14 @@
 # Lang LombokAuth v0.1.0
 
-## 1. Tingkat i18n
+## 1. i18n level
 
-Tingkat **E** (pesan error dan dokumentasi saja). Library tidak menghasilkan teks untuk pengguna akhir selain pesan galat.
+Level **E** (error messages and documentation only). The library produces no end-user text other than error messages. The source language of all messages and documentation is English.
 
-## 2. Katalog ID pesan (normatif)
+## 2. Message ID catalog (normative)
 
-Format `lombokauth.<jenis>.<kode>`. Berkas katalog: `locales/<bcp47>/lombokauth.json`, satu berkas untuk semua port.
+Format `lombokauth.<kind>.<code>`. Catalog files: `locales/<bcp47>/lombokauth.json`, one file for all ports.
 
-| ID | Teks sumber (en) | Kode galat |
+| ID | Source text (en) | Error code |
 |---|---|---|
 | `lombokauth.error.invalid_secret` | The secret is missing or too short. | `invalid_secret` |
 | `lombokauth.error.invalid_token` | The token is malformed. | `invalid_token` |
@@ -27,18 +27,18 @@ Format `lombokauth.<jenis>.<kode>`. Berkas katalog: `locales/<bcp47>/lombokauth.
 | `lombokauth.error.invalid_role` | A role is unknown. | `invalid_role` |
 | `lombokauth.error.invalid_permission` | A permission name is invalid. | `invalid_permission` |
 
-Galat membawa `code` (kontrak, sama di semua port) dan `messageId`. Pesan `message` di objek galat berbahasa Inggris dan tidak bersifat normatif.
+An error carries `code` (contract, the same in all ports) and `messageId`. The `message` field of the error object is in English and is not normative.
 
-## 3. Cakupan saat ini
+## 3. Current coverage
 
-Core-20: 2 dari 20 (`en`, `id`). Paket Nusantara: 0 dari 6. Bahasa lain belum ada. Katalog bahasa tambahan harus ditinjau penutur asli sebelum diterima.
+Core-20: 2 of 20 (`en`, `id`). Nusantara pack: 0 of 6. No other languages yet. Catalogs for additional languages must be reviewed by a native speaker before they are accepted.
 
-## 4. Cara menambah bahasa
+## 4. How to add a language
 
-1. Salin `locales/en/lombokauth.json` ke `locales/<bcp47>/lombokauth.json`.
-2. Terjemahkan nilai; kunci tidak diubah.
-3. Minta tinjauan penutur asli, lalu ajukan PR.
+1. Copy `locales/en/lombokauth.json` to `locales/<bcp47>/lombokauth.json`.
+2. Translate the values; keys are not changed.
+3. Ask a native speaker to review, then open a pull request.
 
-## 5. Ketergantungan LombokLocale
+## 5. Dependency on LombokLocale
 
-Tidak ada pada 0.1.0. Konsumen yang memakai LombokLocale dapat me-resolve `messageId` terhadap katalog di atas.
+None in 0.1.0. A consumer that uses LombokLocale can resolve `messageId` against the catalogs above.

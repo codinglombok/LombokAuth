@@ -8,9 +8,11 @@ Cargo.lock
 *.tsbuildinfo
 .DS_Store
 
-# Dokumen internal Lombok Ecosystem (v3.6, ADR-024) - tidak di-commit
+# Lombok Ecosystem internal documents (v3.6, ADR-024) - not committed
 /map
 /docs/*architecture*.*
 /docs/*masterplan*.*
 /docs/*ARCHITECTURE*.*
 /docs/*MASTERPLAN*.*
+*.bak
+*.orig

@@ -1,43 +1,43 @@
 # Full Summary LombokAuth v0.1.0
 
-## Apa ini
+## What it is
 
-Inti autentikasi tanpa dependensi: JWT HS256 dengan verifikasi ketat, hash kata sandi PBKDF2 berformat PHC, HOTP/TOTP, dan RBAC dengan wildcard, pewarisan, dan aturan tolak.
+A dependency-free authentication core: JWT HS256 with strict verification, PBKDF2 password hashes in PHC format, HOTP/TOTP, and RBAC with wildcards, inheritance and deny rules.
 
-## Mengapa dibuat
+## Why it exists
 
-Kerentanan autentikasi umumnya berasal dari aturan di sekitar kriptografi: menerima `alg: none`, tidak memeriksa `exp`, perbandingan yang tidak waktu-konstan, atau iterasi hash yang terlalu kecil. Pustaka di setiap bahasa memiliki bawaan berbeda. Kontrak bersama menetapkan bawaan yang aman dan identik di semua port.
+Authentication vulnerabilities generally come from the rules around the cryptography: accepting `alg: none`, not checking `exp`, comparisons that are not constant-time, or hash iteration counts that are too low. The libraries of each language have different defaults. A shared contract fixes secure defaults that are identical in every port.
 
-## Fitur utama
+## Main features
 
-Lihat README (bagian Fitur). Semua fitur dicakup vector.
+See the README (Features section). All features are covered by vectors.
 
-## Status saat ini
+## Current status
 
-Kode lengkap untuk Rust dan TypeScript; lulus 381 kasus vector; belum terbit di registry; belum memenuhi aturan skor rilis (lihat `TECH_DEBT.md`).
+Complete code for Rust and TypeScript; passes 381 vector cases; not yet published to any registry; does not yet meet the release score rule (see `TECH_DEBT.md`).
 
-## Contoh pemakai
+## Example users
 
-Lihat README (skenario pemakaian).
+See the README (usage scenarios).
 
-## Batasan yang Diketahui
+## Known Limitations
 
-- JWT hanya HS256; tidak ada algoritma asimetris, JWE, atau JWKS.
-- PBKDF2 saja; Argon2id belum tersedia.
-- Kripto belum diaudit pihak ketiga.
-- Pencegahan replay TOTP dan pencabutan token menjadi tanggung jawab aplikasi.
-- Port Rust tidak memiliki sumber keacakan.
-- Hanya dua port (Rust, TypeScript); fuzz berupa pseudo-fuzz, belum `cargo-fuzz`; belum audit pihak ketiga; coverage belum diukur.
+- JWT is HS256 only; no asymmetric algorithms, JWE or JWKS.
+- PBKDF2 only; Argon2id is not available yet.
+- The cryptography has not been audited by a third party.
+- TOTP replay prevention and token revocation are the responsibility of the application.
+- The Rust port has no source of randomness.
+- Only two ports (Rust, TypeScript); fuzzing is pseudo-fuzzing, not `cargo-fuzz`; no third-party audit; coverage not measured yet.
 
-## Info lanjut
+## More information
 
-SPEC_, API_, `development_ide_`.
+`SPEC_`, `API_`, `development_ide_`.
 
-## Gap vs pembanding (U6)
+## Gap vs comparators (U6)
 
-Perbandingan bersifat kualitatif dan berdasarkan pengetahuan umum tentang kategori library; belum diverifikasi fitur demi fitur pada 2026-10-07.
+The comparison is qualitative and based on general knowledge of each category of library; it has not been verified feature by feature on 2026-10-07.
 
-| Pembanding (kategori) | Yang dimiliki pembanding dan belum dimiliki LombokAuth | Yang ditawarkan LombokAuth |
+| Comparator (category) | What the comparator has that LombokAuth does not | What LombokAuth offers |
 |---|---|---|
-| Pustaka JWT dan auth (jose, jsonwebtoken, PyJWT, otplib, Casbin) | Algoritma asimetris, JWKS, adapter penyimpanan, model kebijakan yang lebih kaya | Kontrak lintas bahasa dengan vector RFC; bawaan aman; inti `no_std + alloc`; tanpa dependensi |
-| Penyedia identitas (Keycloak, Auth0) | OAuth2/OIDC lengkap, UI, federasi | Komponen tertanam tanpa server |
+| JWT and auth libraries (jose, jsonwebtoken, PyJWT, otplib, Casbin) | Asymmetric algorithms, JWKS, storage adapters, richer policy models | A cross-language contract with RFC vectors; secure defaults; a `no_std + alloc` core; no dependencies |
+| Identity providers (Keycloak, Auth0) | Full OAuth2/OIDC, UI, federation | An embeddable component without a server |

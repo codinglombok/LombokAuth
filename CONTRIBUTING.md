@@ -1,17 +1,17 @@
-# Berkontribusi
+# Contributing
 
-1. **Kontrak dulu.** Perubahan perilaku dimulai dari `docs/SPEC_LombokAuth_v0.1.0.md` dan `scripts/gen-vectors.mjs`, bukan dari kode.
-2. **Test dulu.** Tambahkan kasus golden dengan ekspektasi yang ditulis tangan atau diambil dari standar acuan (RFC) di pembangkit vector.
-3. **Semua port harus lulus.** Jalankan:
+1. **Contract first.** A behavior change starts in `docs/SPEC_LombokAuth_v0.1.0.md` and `scripts/gen-vectors.mjs`, not in the code.
+2. **Tests first.** Add golden cases whose expectation is written by hand, copied from an RFC (4226, 6238, 4648), or built with `node:crypto` in the vector generator.
+3. **Every port must pass.** Run:
 
 ```bash
-cd typescript && npm ci && npm test        # build + test TypeScript
-node ../scripts/gen-vectors.mjs            # setelah mengubah vector; catat sha256 baru di SPEC
+cd typescript && npm ci && npm test        # build + TypeScript tests
+node ../scripts/gen-vectors.mjs            # after changing vectors; record the new sha256 in SPEC
 cd ../rust && cargo test && cargo build --no-default-features
-node ../scripts/mutation-test.mjs          # semua mutan harus terbunuh
+node ../scripts/mutation-test.mjs          # every mutant must be killed
 ```
 
-4. Perubahan vector mengubah hash di `SPEC_`; perbarui `SPEC_`, `vectors/README.md`, `CHANGELOG.md`, dan `API_` pada PR yang sama.
-5. Pesan commit mengikuti Conventional Commits (`feat:`, `fix:`, `docs:`) dan bersifat fungsional.
-6. Jangan menyertakan data nyata, nama klien, atau domain organisasi nyata di contoh, test, atau pesan commit; gunakan data sintetis dan domain `example.com`.
-7. Dokumen berbahasa formal tanpa emoji.
+4. A vector change changes the hash in `SPEC_`; update `SPEC_`, `vectors/README.md`, `CHANGELOG.md` and `API_` in the same pull request.
+5. Commit messages follow Conventional Commits (`feat:`, `fix:`, `docs:`) and describe the change functionally.
+6. Do not include real data, client names or real organization domains in examples, tests or commit messages; use synthetic data and `example.com`.
+7. Documents are written in formal English without emoji. English is the default language of every Lombok repository.
